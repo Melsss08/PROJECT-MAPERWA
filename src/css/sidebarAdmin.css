@@ -1,0 +1,50 @@
+/* sidebar.css */
+
+.admin-layout {
+    display: flex;
+    height: calc(100vh - 60px); /* kurangi tinggi header jika ada */
+  }
+  
+  .sidebar {
+    width: 240px;
+    background-color: #fff5e1;
+    padding: 20px;
+    border-right: 1px solid #d3b996;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+    color: #5c4033;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar a::before {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  .sidebar a:hover {
+    color: #8c5c37;
+    background-color: #e6c8a3; /* Background berubah saat hover */
+    border-radius: 5px; /* Memberikan sudut melengkung pada hover */
+    padding-left: 10px; /* Memberikan jarak saat hover */
+    transition: all 0.3s ease-in-out; /* Efek transisi halus */
+  }
+  
+  .content {
+    flex: 1;
+    background-color: #fbe1af;
+    padding: 20px;
+  }
+  
