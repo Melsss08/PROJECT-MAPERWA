@@ -1,4 +1,4 @@
-// LOGIN ITU DAFTAR AKUN
+// LOGIN.js ITU DAFTAR AKUN
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
