@@ -1,41 +1,55 @@
 .admin-header {
-    background-color: #fff5e1;
-    border-bottom: 1px solid #d9c2a0;
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  
-  .admin-header .container {
-    max-width: 1500px; /* sesuaikan lebar maksimum */
-    margin: 0 auto;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .left-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .logo {
-    width: 45px;
-    height: auto;
-  }
-  
-  .org-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: #8c5c37;
-  }
-  
-  .right-section {
-    font-size: 16px;
-    font-weight: 600;
-    color: #5c4033;
-  }
-  
+  background-color: #fff5e1;
+  border-bottom: 1px solid #d9c2a0;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Menambahkan shadow agar header lebih menonjol */
+}
+
+.admin-header .container {
+  max-width: 1500px; /* sesuaikan lebar maksimum */
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 45px;
+  height: auto;
+}
+
+.org-name {
+  font-size: 20px; /* Menyesuaikan ukuran font agar lebih jelas */
+  font-weight: bold;
+  color: #8c5c37;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Memberikan jarak antara ikon dan teks */
+  font-size: 16px;
+  font-weight: 600;
+  color: #5c4033;
+}
+
+.admin-icon {
+  font-size: 22px; /* Ukuran ikon */
+  color: #5c4033;
+}
+
+.admin-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5c4033;
+}

@@ -1,7 +1,4 @@
-.adart-page {
-    background-color: #e3b580;
-    padding: 20px;
-}
+
 
 .adart-header {
     display: block;
@@ -19,7 +16,10 @@
     cursor: pointer;
     width: fit-content;
     text-align: center;
+    float: right; 
+    margin-top: -60px;/* Ini akan mengapungkan tombol ke kanan */
 }
+
 
 .bab-list {
     margin-top: 30px;
