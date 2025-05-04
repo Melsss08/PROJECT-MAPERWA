@@ -1,0 +1,83 @@
+.detail-card {
+  background-color: #d5a97d;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  position: relative;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.edit-icon:hover {
+  transform: scale(1.1);
+}
+
+.title-section {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.title-section h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.title-section h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.title-section h4 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.content-box {
+  background-color: rgba(116, 81, 45, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.back-button {
+  background-color: #6A3F21;
+  color: #fff;
+  padding: 8px 16px; /* padding lebih seimbang */
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600; /* font weight yang lebih tepat */
+  border: none;
+  cursor: pointer;
+  max-width: 90px; /* Maksimal lebar tombol */
+  text-overflow: ellipsis; /* Teks yang terlalu panjang akan dipotong */
+  overflow: hidden; /* Cegah teks meluber keluar */
+  white-space: nowrap; /* Mencegah teks terbungkus */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #5a321a;
+  transform: translateY(-1px);
+}
