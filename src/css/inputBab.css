@@ -1,0 +1,81 @@
+
+.input-field,
+.input-area {
+  background-color: rgba(116, 81, 45, 0.3); /* 30% dari warna #74512D */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  width: 900px;
+}
+
+  
+  .input-field input,
+  .input-area textarea {
+    border: none;
+    background: transparent;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #4b3621;
+    outline: none;
+  }
+  
+  .input-area {
+    min-height: 250px;
+    align-items: flex-start;
+  }
+  
+  .input-area textarea {
+    resize: none;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top: 4px;
+  }
+  
+  .icon {
+    color: #8C5630;
+    flex-shrink: 0;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 6px;
+    width: 20%; 
+    margin-top: 16px;
+  }
+
+  
+  .btn {
+    padding: 4px 14px;           /* Padding kecil */
+    border: none;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+    max-width: 100px;            /* Batas lebar tombol */
+    white-space: nowrap;         /* Mencegah teks membungkus */
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cancel {
+    background-color: #6A3F21;
+  }
+  
+  .cancel:hover {
+    background-color: #5a321a;
+  }
+  
+  .submit {
+    background-color: #6A3F21;
+  }
+  
+  .submit:hover {
+    background-color: #5a321a;
+  }
+  
