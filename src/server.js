@@ -11,6 +11,7 @@ const PORT = 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
+// rutenya
 app.use('/', loginRoutes);
 app.use('/jadwal', jadwalRoutes);
 
