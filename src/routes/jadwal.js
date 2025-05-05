@@ -32,4 +32,30 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Update jadwal
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { judul, isiPesan, date } = req.body;
+
+  try {
+    await Jadwal.update({ judul, isiPesan, date }, { where: { id } });
+    res.json({ message: 'Jadwal diperbarui' });
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal memperbarui jadwal' });
+  }
+});
+
+// Hapus jadwal
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Jadwal.destroy({ where: { id } });
+    res.json({ message: 'Jadwal dihapus' });
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal menghapus jadwal' });
+  }
+});
+
+
 module.exports = router;
