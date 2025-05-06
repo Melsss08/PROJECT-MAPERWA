@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import '../css/detailBabPasal.css';
 
 const DetailBabPasal = ({ bab, onBack }) => {
@@ -39,7 +38,7 @@ const DetailBabPasal = ({ bab, onBack }) => {
         </div>
 
         <div className="button-container">
-          <Link to="/" className="back-button">Kembali</Link>
+          <button className="back-button" onClick={onBack}>Kembali</button>
         </div>
       </div>
     </div>

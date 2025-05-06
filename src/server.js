@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db');
 const loginRoutes = require('./routes/login');
+const babsRoutes = require('./routes/babs'); // Rute baru untuk babs
 const jadwalRoutes = require('./routes/jadwal');
 
 const app = express();
@@ -11,9 +12,9 @@ const PORT = 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
-// rutenya
+// Gunakan rute secara terpisah
 app.use('/', loginRoutes);
-app.use('/jadwal', jadwalRoutes);
+app.use('/babs', babsRoutes);
 
 sequelize.sync()
   .then(() => {
