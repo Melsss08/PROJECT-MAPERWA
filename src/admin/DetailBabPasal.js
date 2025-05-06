@@ -1,9 +1,8 @@
 import React from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import '../css/detailBabPasal.css';
 
-const DetailBabPasal = () => {
+const DetailBabPasal = ({ bab, onBack }) => {
   return (
     <div className="detail-container">
       <div className="detail-card">
@@ -12,9 +11,20 @@ const DetailBabPasal = () => {
         </div>
 
         <div className="title-section">
+          <h3>{bab.judul}</h3>
           <h3>BAB I</h3>
           <h2>KETENTUAN UMUM</h2>
           <h4>Pasal I</h4>
+        </div>
+
+        <div className="content-box">
+          <p>{bab.isi}</p>
+        </div>
+
+        <div className="button-container">
+          <button className="back-button" onClick={onBack}>
+            Kembali
+          </button>
         </div>
 
         <div className="content-box">
@@ -28,7 +38,7 @@ const DetailBabPasal = () => {
         </div>
 
         <div className="button-container">
-          <Link to="/" className="back-button">Kembali</Link>
+          <button className="back-button" onClick={onBack}>Kembali</button>
         </div>
       </div>
     </div>
