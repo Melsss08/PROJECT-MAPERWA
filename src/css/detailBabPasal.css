@@ -1,7 +1,3 @@
-.button-container {
-  position: relative;
-}
-
 .back-button {
   position: absolute;
   left: 0; /* Memastikan tombol berada di sisi kiri */

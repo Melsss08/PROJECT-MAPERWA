@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/inputBab.css';  // Gaya CSS untuk styling
+import '../css/inputBab.css';
 import { FaPlus } from 'react-icons/fa';
 
 const InputBab = ({ onCancel }) => {
