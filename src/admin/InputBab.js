@@ -1,22 +1,40 @@
 import React, { useState } from 'react';
 import '../css/inputBab.css';
 import { FaPlus } from 'react-icons/fa';
-import axios from 'axios';
 
 const InputBab = ({ onCancel }) => {
   const [judul, setJudul] = useState('');
   const [isi, setIsi] = useState('');
 
-  const handleSubmit = async () => {
-    if (!judul || !isi) return alert('Semua field harus diisi');
+  // Menangani pengiriman form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!judul || !isi) {
+      alert("Judul dan isi harus diisi");
+      return;
+    }
 
     try {
-      await axios.post('http://localhost:3001/babs', { judul, isi });
-      alert('Data berhasil disimpan');
-      onCancel(); // kembali ke tampilan awal
+      const response = await fetch('/api/babs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ judul, isi }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Jika berhasil
+        console.log('Bab berhasil ditambahkan:', data);
+      } else {
+        // Jika terjadi error
+        console.error('Gagal menambah bab:', data.error);
+      }
     } catch (err) {
-      console.error(err);
-      alert('Gagal menyimpan data');
+      console.error('Error:', err);
     }
   };
 
