@@ -1,3 +1,8 @@
+.adart-page {
+    background-color: #D7A86E;
+    padding: 20px;
+}
+
 .adart-header {
     display: block;
     justify-content: space-between;
@@ -5,6 +10,8 @@
 }
 
 .add-button {
+    background-color: #D7A86E;
+    color: white;
     background-color: rgba(116, 81, 45, 0.3); /* 30% dari #74512D */
     color: white; /* ubah teks menjadi putih */
     border: none;
@@ -20,7 +27,7 @@
 }
 
 .add-button:hover {
-    background-color: rgba(116, 81, 45, 0.5); /* sedikit lebih gelap saat hover */
+    background-color: rgba(116, 81, 45, 0.5); 
 }
 
 .bab-list {
@@ -28,7 +35,7 @@
 }
 
 .bab-item {
-    background-color: rgba(116, 81, 45, 0.3); /* 30% dari #74512D */
+    background-color: rgba(116, 81, 45, 0.3); 
     color: white; /* ubah teks menjadi putih */
     padding: 15px;
     margin-bottom: 10px;

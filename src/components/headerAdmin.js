@@ -8,7 +8,7 @@ const HeaderAdmin = () => {
       <div className="container">
         <div className="left-section">
           <img src="/logo.png" alt="Logo Maperwa" className="logo" />
-          <span className="org-name">MAPERWA ORGANISASI</span>
+          <span className="org-name">MAPERWA</span>
         </div>
         <div className="right-section">
           <FaUserShield className="admin-icon" /> {/* Menambahkan ikon admin */}
