@@ -7,7 +7,7 @@ const HeaderAdmin = () => {
     <header className="admin-header">
       <div className="container">
         <div className="left-section">
-          <img src="/logo.png" alt="Logo Maperwa" className="logo" />
+          <img src="/logo2.png" alt="Logo Maperwa" className="logo" />
           <span className="org-name">MAPERWA</span>
         </div>
         <div className="right-section">
