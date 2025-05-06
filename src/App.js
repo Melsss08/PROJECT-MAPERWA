@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './admin/register';
 import Masuk from './admin/masuk';
 import Adart from './admin/adart';
-import InputKepengurusan from './admin/InputKepengurusan';
+// import InputKepengurusan from './admin/InputKepengurusan';
 // import Aspirasi from './admin/Aspirasi';
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
@@ -21,19 +21,9 @@ function App() {
 
         {/* Halaman-halaman yang menggunakan layout admin */}
         <Route path="/" element={<LayoutAdmin><Adart /></LayoutAdmin>} />
-        {/* <Route path="/struktur" element={<LayoutAdmin><Struktur /></LayoutAdmin>} /> */}
-        {/* <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} /> */}
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
-        {/* <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */}
-
-        {/* <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan /></LayoutAdmin>} /> */}
         <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
-        {/* <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} />
-        <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
-        <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */} */
-
-
       </Routes>
     </Router>
   );
