@@ -1,51 +1,117 @@
-.kontak-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem;
-    background-color: #d2a671;
-    padding: 2rem;
-    min-height: 100vh;
-  }
+.kontak-wrapper {
+  padding: 40px;
+  background-color: #c9945a;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-  .kontak-card {
-    flex: 1;
-    background-color: #f5d7b5;
-    border-radius: 16px;
-    padding: 2rem;
-    position: relative;
-  }
-  
-  .kontak-box {
-    background-color: #f2d1a0;
-    padding: 2rem;
-    border-radius: 16px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-  
-  .kontak-item {
-    display: flex;
-    align-items: center;
-    background-color: #c29b6b;
-    padding: 1rem;
-    border-radius: 12px;
-    color: white;
-    font-size: 1.1rem;
-    gap: 1rem;
-  }
-  
-  .kontak-item i {
-    font-size: 1.2rem;
-  }
-  
-  .map-box iframe {
-    width: 400px;
-    height: 350px;
-    border: 0;
-    border-radius: 12px;
-  }
-  
-  
+.edit-button {
+  background-color: #a97344;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #8b5e2e;
+}
+
+.kontak-layout {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.kontak-box {
+  background-color: #f2d3a4;
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.kontak-item {
+  background-color: #c69863;
+  border-radius: 14px;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.kontak-item .icon {
+  font-size: 20px;
+}
+
+.map-box {
+  width: 45%;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Form styling */
+.kontak-form {
+  background-color: #f2d3a4;
+  border-radius: 20px;
+  padding: 50px;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row; /* sejajarkan horizontal */
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-group label {
+  width: 150px; /* atur lebar tetap untuk label */
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.form-group input {
+  flex: 1; /* biar input mengisi sisa ruang */
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  min-width: 0;
+}
+
+.submit-button {
+  background-color: #a97344;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  display: block;
+}
+
+.submit-button:hover {
+  background-color: #8b5e2e;
+}
