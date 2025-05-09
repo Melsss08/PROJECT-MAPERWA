@@ -65,7 +65,7 @@
 
 /* Form styling */
 .kontak-form {
-  background-color: #f2d3a4;
+  background-color: #f8d7aa;
   border-radius: 20px;
   padding: 50px;
   max-width: 700px;
@@ -92,9 +92,15 @@
 .form-group input {
   flex: 1;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  border-radius: 12px;
+  border: none;
   min-width: 0;
+  background-color: #a97344;
+  color: #fff;
+}
+
+.form-group input::placeholder {
+  color: #fff;
 }
 
 .submit-button {

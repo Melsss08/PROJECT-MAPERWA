@@ -130,11 +130,15 @@ export default function ContactForm() {
             </div>
             <div className="card-actions">
               {editMode && editId === contact.id ? (
-                <button onClick={handleCancelEdit} className="edit-button">❌ Batal</button>
+                <>
+                  <button onClick={handleCancelEdit} className="edit-button">❌ Batal</button>
+                </>
               ) : (
-                <button onClick={() => handleEdit(contact)} className="edit-button">✏️ Edit</button>
+                <>
+                  <button onClick={() => handleEdit(contact)} className="edit-button">✏️ Edit</button>
+                  <button onClick={() => handleDelete(contact.id)} className="edit-button">🗑️ Hapus</button>
+                </>
               )}
-              <button onClick={() => handleDelete(contact.id)} className="edit-button">🗑️ Hapus</button>
             </div>
           </div>
         ))}
