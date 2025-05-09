@@ -8,7 +8,18 @@
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.jadwal-container form button {
+  align-self: center; /* Hanya tombol yang ditengah */
+}
+
+.jadwal-container label {
+  margin-left: 4%;
+  align-self: flex-start;
+  font-weight: 500;
+  color: #5c4033;
 }
 
 .jadwal-container input,

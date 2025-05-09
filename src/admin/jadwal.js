@@ -45,19 +45,22 @@ export default function Jadwal() {
     <div className="jadwal-container">
       <h2>Jadwal & Pengumuman</h2>
       <form onSubmit={handleSubmit}>
+        <label>Judul Kegiatan/Pengumuman:</label>
         <input
           type="text"
-          placeholder="Judul Kegiatan/Pengumuman"
+          placeholder="Masukkan Judul Kegiatan/Pengumuman"
           value={form.judul}
           onChange={e => setForm({ ...form, judul: e.target.value })}
           required
         />
+        <label>Deskripsi Kegiatan:</label>
         <textarea
-          placeholder="Deskripsi Kegiatan"
+          placeholder="Masukkan Deskripsi Kegiatan"
           value={form.isiPesan}
           onChange={e => setForm({ ...form, isiPesan: e.target.value })}
           required
         />
+        <label>Tanggal Kegiatan:</label>
         <input
           type="date"
           value={form.date}
