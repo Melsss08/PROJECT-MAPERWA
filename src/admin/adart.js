@@ -17,7 +17,7 @@ const Adart = () => {
   // Function ambil data bab
   const fetchBabList = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/babs');
+      const response = await axios.get('http://localhost:3001/api/babs');
       setBabList(response.data);
     } catch (error) {
       console.error('Gagal mengambil data bab:', error);
@@ -39,12 +39,18 @@ const Adart = () => {
       {!showInput && !selectedBab && (
         <>
           <div className="adart-header">
-            <button className="add-button" onClick={() => setShowInput(true)}>+ Tambah Bab</button>
+            <button className="add-button" onClick={() => setShowInput(true)}>
+              + Tambah Bab
+            </button>
           </div>
 
           <div className="bab-list">
             {babList.map((bab) => (
-              <div className="bab-item" key={bab.id} onClick={() => handleBabClick(bab)}>
+              <div
+                className="bab-item"
+                key={bab.id}
+                onClick={() => handleBabClick(bab)}
+              >
                 {bab.judul}
               </div>
             ))}
@@ -53,10 +59,13 @@ const Adart = () => {
       )}
 
       {showInput && !selectedBab && (
-        <InputBab onCancel={() => {
-          setShowInput(false);
-          fetchBabList(); // refresh data setelah tambah
-        }} />
+        <InputBab
+          onCancel={() => {
+            setShowInput(false);
+            fetchBabList(); // refresh data setelah tambah
+          }}
+          onBabAdded={fetchBabList} // Pass fetchBabList as a prop to refresh the list
+        />
       )}
 
       {selectedBab && (

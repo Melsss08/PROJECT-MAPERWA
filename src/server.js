@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 
 // Gunakan rute secara terpisah
 app.use('/', loginRoutes);
-app.use('/babs', babsRoutes);
+app.use('/api/babs', babsRoutes); 
+app.use('/api/jadwal', jadwalRoutes);
 
 sequelize.sync()
   .then(() => {
