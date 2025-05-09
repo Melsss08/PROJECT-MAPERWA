@@ -42,7 +42,7 @@ export default function Jadwal() {
   };
 
   return (
-    <div className="container">
+    <div className="jadwal-container">
       <h2>Jadwal & Pengumuman</h2>
       <form onSubmit={handleSubmit}>
         <input

@@ -1,9 +1,8 @@
-.container {
+.jadwal-container {
   padding: 2rem;
-  /* background-color: #d2a671; */
 }
-  
-form {
+
+.jadwal-container form {
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
@@ -12,7 +11,8 @@ form {
   align-items: center;
 }
 
-input, textarea {
+.jadwal-container input,
+.jadwal-container textarea {
   display: block;
   margin: 0.75rem auto;
   padding: 0.75rem;
@@ -20,38 +20,32 @@ input, textarea {
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
-}
-
-input[type="text"] {
   background-color: #ffffff;
-  border-radius: 8px;
-  margin: 0.75rem auto;
-  width: 92%;
-  padding: 0.75rem;
 }
 
-input[type="date"] {
+.jadwal-container input[type="date"] {
   color: #6A3F21;
   font-family: 'Segoe UI', sans-serif;
 }
 
-input::placeholder, textarea::placeholder {
+.jadwal-container input::placeholder,
+.jadwal-container textarea::placeholder {
   color: #6A3F21;
   font-family: 'Segoe UI', sans-serif;
 }
 
-textarea {
+.jadwal-container textarea {
   resize: vertical;
   min-height: 90px;
 }
 
-.schedule-list {
+.jadwal-container .schedule-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.card {
+.jadwal-container .card {
   background-color: #b68b59;
   padding: 1rem;
   border-radius: 8px;
@@ -59,13 +53,13 @@ textarea {
   font-size: 16px;
 }
 
-.date {
+.jadwal-container .date {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
-button {
+.jadwal-container button {
   background-color: #b68b59;
   color: white;
   padding: 0.75rem;
@@ -77,17 +71,17 @@ button {
   transition: background-color 0.2s ease;
 }
 
-h2 {
+.jadwal-container h2 {
   color: #6A3F21;
 }
 
-.card-actions {
-margin-top: 0.5rem;
+.jadwal-container .card-actions {
+  margin-top: 0.5rem;
   display: flex;
   gap: 0.5rem;
 }
 
-.card-actions button {
+.jadwal-container .card-actions button {
   padding: 0.4rem 0.8rem;
   border: none;
   border-radius: 4px;
@@ -96,12 +90,12 @@ margin-top: 0.5rem;
   width: 10%;
 }
 
-.card-actions button:first-child {
+.jadwal-container .card-actions button:first-child {
   background-color: #5c4033;
   color: white;
 }
 
-.card-actions button:last-child {
+.jadwal-container .card-actions button:last-child {
   background-color: #a94442;
   color: white;
 }
