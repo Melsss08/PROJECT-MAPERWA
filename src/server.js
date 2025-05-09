@@ -3,8 +3,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db');
 const loginRoutes = require('./routes/login');
-const babsRoutes = require('./routes/babs'); // Rute baru untuk babs
+const babsRoutes = require('./routes/babs');
 const jadwalRoutes = require('./routes/jadwal');
+const inputKepengurusanRoutes = require('./routes/InputKepengurusan');
+const kontakRoutes = require('./routes/kontak');
 
 const app = express();
 const PORT = 3001;
@@ -16,6 +18,11 @@ app.use(bodyParser.json());
 app.use('/', loginRoutes);
 app.use('/api/babs', babsRoutes); 
 app.use('/api/jadwal', jadwalRoutes);
+app.use('/babs', babsRoutes);
+app.use('/inputKepengurusan', inputKepengurusanRoutes);
+app.use('/jadwal', jadwalRoutes);
+app.use('/kontak', kontakRoutes);
+app.use('/uploads', express.static('uploads'));
 
 sequelize.sync()
   .then(() => {
