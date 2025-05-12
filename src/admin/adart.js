@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../css/adart.css';
+import '../css/cssAdmin/adart.css';
 import InputBab from './InputBab';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';

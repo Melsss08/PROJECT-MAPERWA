@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/InputKepengurusan.css';
+import '../css/cssAdmin/InputKepengurusan.css';
 import { FaPlus, FaUpload } from 'react-icons/fa';
 import axios from 'axios';
 

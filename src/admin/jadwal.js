@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../css/jadwal.css';
+import '../css/cssAdmin/jadwal.css';
 
 export default function Jadwal() {
   const [jadwal, setJadwal] = useState([]);

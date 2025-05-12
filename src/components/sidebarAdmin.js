@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaFile, FaUsers, FaComment, FaCalendarAlt, FaAddressBook } from 'react-icons/fa'; // Import ikon yang digunakan
-import '../css/sidebarAdmin.css';
+import '../css/cssAdmin/sidebarAdmin.css';
 
 const SidebarAdmin = ({ children }) => {
   return (

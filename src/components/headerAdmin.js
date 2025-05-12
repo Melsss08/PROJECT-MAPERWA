@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/headerAdmin.css'; // Jangan lupa buat file CSS-nya
+import '../css/cssAdmin/headerAdmin.css'; // Jangan lupa buat file CSS-nya
 import { FaUserShield } from 'react-icons/fa'; // Menggunakan React Icons untuk ikon admin
 
 const HeaderAdmin = () => {

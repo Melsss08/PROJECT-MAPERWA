@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/inputBab.css';
+import '../css/cssAdmin/inputBab.css';
 import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
