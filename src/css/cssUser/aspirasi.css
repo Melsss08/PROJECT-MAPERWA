@@ -1,0 +1,67 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+.aspirasi-container {
+  padding: 1rem;
+  background-color: #d2a875;
+  min-height: 100vh;
+}
+
+.aspirasi-form {
+  display: flex;
+  align-items: center;
+  background-color: #c9a77d;
+  border-radius: 15px;
+  padding: 12px 20px;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.aspirasi-form input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.aspirasi-form button {
+  background-color: #6b2c0d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.plus-icon {
+  font-size: 1.5rem;
+  color: #6b2c0d;
+}
+
+.aspirasi-card {
+  background-color: #f6f2ed;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #6b2c0d;
+  margin-bottom: 8px;
+}
+
+.user-icon {
+  font-size: 1.2rem;
+}
+
+.lihat-balasan {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 8px;
+}

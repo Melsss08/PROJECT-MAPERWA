@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../css/register.css'; // Menggunakan CSS yang sama seperti register
+import '../css/register.css'; 
 
 const Login = () => {
   const [username, setUsername] = useState('');

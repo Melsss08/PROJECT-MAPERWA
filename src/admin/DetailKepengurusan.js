@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/DetailKepengurusan.css';
+import '../css/cssAdmin/DetailKepengurusan.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const DetailKepengurusan = () => {

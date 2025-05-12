@@ -41,24 +41,23 @@
     margin-top: 4px;
   }
   
-  .button-group {
-    display: flex;
-    gap: 6px;
-    width: 20%; 
-    margin-top: 16px;
-  }
+ .button-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  justify-content: flex-end; /* tombol ke kanan */
+}
 
   
   .btn {
-    padding: 4px 14px;           /* Padding kecil */
+    padding: 8px 20px;
     border: none;
-    border-radius: 10px;
-    font-size: 12px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     color: white;
-    max-width: 100px;            /* Batas lebar tombol */
-    white-space: nowrap;         /* Mencegah teks membungkus */
+    min-width: 100px;
     text-align: center;
     transition: background-color 0.3s ease;
   }

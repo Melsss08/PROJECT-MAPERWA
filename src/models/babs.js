@@ -11,6 +11,14 @@ const Bab = sequelize.define('Bab', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  subJudul: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  pasal: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   isi: {
     type: DataTypes.TEXT,
     allowNull: false,
@@ -20,7 +28,7 @@ const Bab = sequelize.define('Bab', {
     defaultValue: DataTypes.NOW,
   },
 }, {
-  timestamps: false, // Karena kita sudah menggunakan created_at manual
+  timestamps: false,
 });
 
 module.exports = Bab;

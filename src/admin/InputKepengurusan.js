@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';  // Impor React dan useEffect
+import { FaPlus, FaUpload } from 'react-icons/fa';
 import axios from 'axios';
-import '../css/InputKepengurusan.css'; // Import CSS file
+import '../css/cssAdmin/InputKepengurusan.css'; // Import CSS file
 import { useParams, useNavigate } from 'react-router-dom';
 
+// Komponen InputKepengurusan
 const InputKepengurusan = ({ onCancel }) => {
+  // Inisialisasi state untuk komponen
   const [namaPeriode, setNamaPeriode] = useState('');
   const [namaLengkap, setNamaLengkap] = useState('');
   const [jabatan, setJabatan] = useState('');
@@ -33,60 +36,59 @@ const InputKepengurusan = ({ onCancel }) => {
     }
   }, [anggotaId]);
 
-const handleAddPeriode = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:3001/api/periode/tambah', { namaPeriode });
-    console.log('Response:', response.data); // Cek apakah respons dari server sudah sesuai
-    alert('Periode berhasil ditambahkan!');
-    setNamaPeriode('');
-    setPeriodeId(response.data.id); // Menyimpan id periode yang baru ditambahkan
-  } catch (error) {
-    alert('Gagal menambah periode');
-    console.error(error);
-  }
-};
+  // Fungsi untuk menambah periode
+  const handleAddPeriode = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3001/api/periode/tambah', { namaPeriode });
+      console.log('Response:', response.data); // Cek apakah respons dari server sudah sesuai
+      alert('Periode berhasil ditambahkan!');
+      setNamaPeriode('');
+      setPeriodeId(response.data.id); // Menyimpan id periode yang baru ditambahkan
+    } catch (error) {
+      alert('Gagal menambah periode');
+      console.error(error);
+    }
+  };
 
-
+  // Fungsi untuk menambah anggota
   const handleAddAnggota = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-formData.append('namaLengkap', namaLengkap);
-formData.append('jabatan', jabatan);
-formData.append('periodeId', periodeId);
-formData.append('gambar', gambar); // pastikan gambar disertakan
+    formData.append('namaLengkap', namaLengkap);
+    formData.append('jabatan', jabatan);
+    formData.append('periodeId', periodeId);
+    formData.append('gambar', gambar); // pastikan gambar disertakan
 
-try {
-  const response = await axios.post('http://localhost:3001/inputKepengurusan/anggota/tambah', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  alert('Anggota berhasil ditambahkan!');
-  setNamaLengkap('');
-  setGambar(null);
-} catch (error) {
-  alert('Gagal menambah anggota');
-  console.error(error.response ? error.response.data : error.message); // Log error detail
-}
-
+    try {
+      const response = await axios.post('http://localhost:3001/inputKepengurusan/anggota/tambah', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      alert('Anggota berhasil ditambahkan!');
+      setNamaLengkap('');
+      setGambar(null);
+    } catch (error) {
+      alert('Gagal menambah anggota');
+      console.error(error.response ? error.response.data : error.message); // Log error detail
+    }
   };
 
   // Ambil Daftar Periode
   useEffect(() => {
-  const fetchPeriodes = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/api/periode');
-      console.log(response.data);  // Cek apakah data periode diterima dengan benar
-      setPeriodes(response.data);  // Menyimpan data periode
-    } catch (error) {
-      console.error('Error fetching periods:', error);
-    }
-  };
+    const fetchPeriodes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/periode');
+        console.log(response.data);  // Cek apakah data periode diterima dengan benar
+        setPeriodes(response.data);  // Menyimpan data periode
+      } catch (error) {
+        console.error('Error fetching periods:', error);
+      }
+    };
 
-  fetchPeriodes();  // Memanggil fungsi untuk mengambil data periode
-}, []);
-
+    fetchPeriodes();  // Memanggil fungsi untuk mengambil data periode
+  }, []);
 
   return (
     <div>

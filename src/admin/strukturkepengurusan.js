@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'; 
-import '../css/strukturkepengurusan.css';
-import InputKepengurusan from './InputKepengurusan'; 
-import axios from 'axios'; 
+import React, { useState, useEffect } from 'react';  // Impor React dan useEffect
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Mengimpor useNavigate
+import '../css/cssAdmin/strukturkepengurusan.css';
+import InputKepengurusan from './InputKepengurusan'; // Pastikan path-nya sesuai
 
 const StrukturKepengurusan = () => {
   const [showInput, setShowInput] = useState(false);
