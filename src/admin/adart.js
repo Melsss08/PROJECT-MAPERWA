@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import '../css/adart.css';
 import InputBab from './InputBab';
-import DetailBabPasal from './DetailBabPasal';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Adart = () => {
   const [showInput, setShowInput] = useState(false);
-  const [selectedBab, setSelectedBab] = useState(null);
-  const [babList, setBabList] = useState([]); // state buat list bab dari DB
+  const [babList, setBabList] = useState([]);
+  const navigate = useNavigate();
 
-  // Ambil data dari API pas komponen mount
   useEffect(() => {
     fetchBabList();
   }, []);
 
-  // Function ambil data bab
   const fetchBabList = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/babs');
@@ -24,19 +22,13 @@ const Adart = () => {
     }
   };
 
-  // Saat klik judul bab
   const handleBabClick = (bab) => {
-    setSelectedBab(bab);
-  };
-
-  // Saat klik kembali dari detail bab
-  const handleBack = () => {
-    setSelectedBab(null);
+    navigate(`/detail-bab/${bab.id}`);
   };
 
   return (
     <div className="adart-page">
-      {!showInput && !selectedBab && (
+      {!showInput && (
         <>
           <div className="adart-header">
             <button className="add-button" onClick={() => setShowInput(true)}>
@@ -46,11 +38,7 @@ const Adart = () => {
 
           <div className="bab-list">
             {babList.map((bab) => (
-              <div
-                className="bab-item"
-                key={bab.id}
-                onClick={() => handleBabClick(bab)}
-              >
+              <div className="bab-item" key={bab.id} onClick={() => handleBabClick(bab)}>
                 {bab.judul}
               </div>
             ))}
@@ -58,18 +46,14 @@ const Adart = () => {
         </>
       )}
 
-      {showInput && !selectedBab && (
+      {showInput && (
         <InputBab
           onCancel={() => {
             setShowInput(false);
-            fetchBabList(); // refresh data setelah tambah
+            fetchBabList();
           }}
-          onBabAdded={fetchBabList} // Pass fetchBabList as a prop to refresh the list
+          onBabAdded={fetchBabList}
         />
-      )}
-
-      {selectedBab && (
-        <DetailBabPasal bab={selectedBab} onBack={handleBack} />
       )}
     </div>
   );
