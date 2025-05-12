@@ -9,7 +9,6 @@ import InputKepengurusan from './admin/InputKepengurusan';
 import Jadwal from './admin/jadwal';
 // import Kontak from './admin/Kontak';
 import LayoutAdmin from './components/layoutAdmin';
-import StrukturKepengurusan from './admin/strukturkepengurusan';
 
 function App() {
   return (
@@ -27,8 +26,6 @@ function App() {
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         {/* <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */}
 
-        {/* <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan /></LayoutAdmin>} /> */}
-        <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
         {/* <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} />
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */} */

@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const InputKepengurusan = require('../models/InputKepengurusan');
 
 // Konfigurasi Multer
 const storage = multer.diskStorage({
@@ -34,5 +31,4 @@ router.post('/', upload.single('gambar'), async (req, res) => {
   }
 });
 
-// ...route lainnya tetap sama...
 module.exports = router;

@@ -18,7 +18,6 @@ const InputKepengurusan = ({ onCancel }) => {
     }
     
     const formData = new FormData();
-    formData.append('periodeTahun', periodeTahun);
     formData.append('namaLengkap', namaLengkap);
     formData.append('jabatan', jabatan);
     if (gambar) {
