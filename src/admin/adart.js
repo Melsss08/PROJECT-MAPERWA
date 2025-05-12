@@ -1,45 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import '../css/cssAdmin/adart.css';
 import InputBab from './InputBab';
-import DetailBabPasal from './DetailBabPasal';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Adart = () => {
   const [showInput, setShowInput] = useState(false);
-  const [selectedBab, setSelectedBab] = useState(null);
-  const [babList, setBabList] = useState([]); // state buat list bab dari DB
+  const [babList, setBabList] = useState([]);
+  const navigate = useNavigate();
 
-  // Ambil data dari API pas komponen mount
   useEffect(() => {
     fetchBabList();
   }, []);
 
-  // Function ambil data bab
   const fetchBabList = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/babs');
+      const response = await axios.get('http://localhost:3001/api/babs');
       setBabList(response.data);
     } catch (error) {
       console.error('Gagal mengambil data bab:', error);
     }
   };
 
-  // Saat klik judul bab
   const handleBabClick = (bab) => {
-    setSelectedBab(bab);
-  };
-
-  // Saat klik kembali dari detail bab
-  const handleBack = () => {
-    setSelectedBab(null);
+    navigate(`/detail-bab/${bab.id}`);
   };
 
   return (
     <div className="adart-page">
-      {!showInput && !selectedBab && (
+      {!showInput && (
         <>
           <div className="adart-header">
-            <button className="add-button" onClick={() => setShowInput(true)}>+ Tambah Bab</button>
+            <button className="add-button" onClick={() => setShowInput(true)}>
+              + Tambah Bab
+            </button>
           </div>
 
           <div className="bab-list">
@@ -52,15 +46,14 @@ const Adart = () => {
         </>
       )}
 
-      {showInput && !selectedBab && (
-        <InputBab onCancel={() => {
-          setShowInput(false);
-          fetchBabList(); // refresh data setelah tambah
-        }} />
-      )}
-
-      {selectedBab && (
-        <DetailBabPasal bab={selectedBab} onBack={handleBack} />
+      {showInput && (
+        <InputBab
+          onCancel={() => {
+            setShowInput(false);
+            fetchBabList();
+          }}
+          onBabAdded={fetchBabList}
+        />
       )}
     </div>
   );

@@ -1,44 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 import '../css/cssAdmin/detailBabPasal.css';
 
-const DetailBabPasal = ({ bab, onBack }) => {
+const DetailBabPasal = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [babDetail, setBabDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBabDetail = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/babs/${id}`);
+        setBabDetail(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Gagal mengambil data bab:', error);
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchBabDetail();
+    }
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!babDetail) return <div>Bab tidak ditemukan</div>;
+
   return (
     <div className="detail-container">
       <div className="detail-card">
-        <div className="edit-icon">
-          <FaEdit />
-        </div>
+        <div className="edit-icon"><FaEdit /></div>
 
         <div className="title-section">
-          <h3>{bab.judul}</h3>
-          <h3>BAB I</h3>
-          <h2>KETENTUAN UMUM</h2>
-          <h4>Pasal I</h4>
+          <h3>{babDetail.judul}</h3>
+          <h3>{babDetail.subJudul}</h3>
+          <h2>{babDetail.ketentuan_umum}</h2>
+          <h4>{babDetail.pasal}</h4>
         </div>
 
         <div className="content-box">
-          <p>{bab.isi}</p>
+          <p>{babDetail.isi}</p>
+          {babDetail.isiTambahan && <p>{babDetail.isiTambahan}</p>}
         </div>
 
         <div className="button-container">
-          <button className="back-button" onClick={onBack}>
-            Kembali
-          </button>
-        </div>
-
-        <div className="content-box">
-          <p>
-            1. Mahasiswa Institut Teknologi Bachruddin Jusuf Habibie adalah peserta didik yang terdaftar dan belajar serta melaksanakan tridarma perguruan tinggi pada Universitas Negeri Makassar.<br />
-            2. Lembaga Kemahasiswaan Universitas Negeri Makassar adalah wahana pengembangan diri mahasiswa ke arah perluasan wawasan, peningkatan kecerdasan, dan integritas kepribadian untuk mencapai tujuan pendidikan tinggi.<br />
-            3. Bidang kemahasiswaan adalah subsistem pendidikan tinggi yang mencakup proses perencanaan, pengorganisasian, pengaturan, pengelolaan, pembinaan, pengendalian, dan evaluasi kegiatan ekstrakurikuler.<br />
-            4. Kegiatan ekstrakurikuler adalah kegiatan kemahasiswaan yang meliputi penalaran dan keilmuan, minat dan kegemaran, upaya perbaikan kesejahteraan, serta bakti sosial pada masyarakat.<br />
-            5. Majelis Permusyawaratan Mahasiswa (Maperwa) tingkat universitas adalah organisasi kemahasiswaan yang merupakan perwakilan mahasiswa pada tingkat universitas, menampung dan menyalurkan aspirasi mahasiswa melalui penetapan Garis Besar Program Kerja (GBPK) yang dilaksanakan oleh Badan Eksekutif Mahasiswa (BEM) tingkat universitas dan disahkan oleh rektor.
-          </p>
-        </div>
-
-        <div className="button-container">
-          <button className="back-button" onClick={onBack}>Kembali</button>
+          <button className="back-button" onClick={() => navigate(-1)}>Kembali</button>
         </div>
       </div>
     </div>

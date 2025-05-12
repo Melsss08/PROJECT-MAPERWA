@@ -17,6 +17,8 @@ app.use(bodyParser.json());
 
 // Gunakan rute secara terpisah
 app.use('/', loginRoutes);
+app.use('/api/babs', babsRoutes); 
+app.use('/api/jadwal', jadwalRoutes);
 app.use('/babs', babsRoutes);
 app.use('/inputKepengurusan', inputKepengurusanRoutes);
 app.use('/jadwal', jadwalRoutes);
