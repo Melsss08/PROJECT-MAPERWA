@@ -25,5 +25,17 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Gagal mengambil data bab' });
   }
 });
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const bab = await Bab.findByPk(id);
+    if (!bab) {
+      return res.status(404).json({ error: 'Bab tidak ditemukan' });
+    }
+    res.json(bab);
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal mengambil data bab' });
+  }
+});
 
 module.exports = router;
