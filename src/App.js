@@ -5,10 +5,15 @@ import Register from './admin/register';
 import Masuk from './admin/masuk';
 import Adart from './admin/adart';
 import InputKepengurusan from './admin/InputKepengurusan';
+import StrukturKepengurusan from './admin/strukturkepengurusan';
+import DetailKepengurusan from './admin/DetailKepengurusan';
+
 // import Aspirasi from './admin/Aspirasi';
 import Jadwal from './admin/jadwal';
 // import Kontak from './admin/Kontak';
 import LayoutAdmin from './components/layoutAdmin';
+
+
 
 function App() {
   return (
@@ -25,7 +30,9 @@ function App() {
         {/* <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} /> */}
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         {/* <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */}
-
+        <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
+        <Route path="/struktur/tambah" element={<LayoutAdmin><InputKepengurusan/></LayoutAdmin>} />
+        <Route path="/detail-kepengurusan/:periodeId" element={<DetailKepengurusan />} /> {/* Rute untuk DetailKepengurusan */}
         {/* <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} />
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */} */

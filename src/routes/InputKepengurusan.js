@@ -1,33 +1,48 @@
+// routes/inputkepengurusan.js
 const express = require('express');
+const multer = require('multer'); 
+const Anggota = require('../models/Anggota');
 const router = express.Router();
 
-// Konfigurasi Multer
+// Set up penyimpanan menggunakan multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // simpan ke folder uploads
+    cb(null, 'uploads/');  // Tentukan lokasi folder untuk menyimpan gambar
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // beri nama unik
-  },
+    cb(null, Date.now() + '-' + file.originalname);  // Nama file unik dengan timestamp
+  }
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
-// CREATE: Tambah data kepengurusan dengan gambar
-router.post('/', upload.single('gambar'), async (req, res) => {
+// Endpoint untuk menambah anggota
+router.post('/anggota/tambah', upload.single('gambar'), async (req, res) => {
   try {
-    const { periodeTahun, namaLengkap, jabatan } = req.body;
-    const gambar = req.file ? req.file.filename : null;
+    const { namaLengkap, jabatan, periodeId } = req.body;
 
-    const newData = await InputKepengurusan.create({
-      periodeTahun,
+    // Validasi input
+    if (!namaLengkap || !jabatan || !periodeId) {
+      return res.status(400).json({ error: 'Nama lengkap, jabatan, dan periode ID harus diisi' });
+    }
+
+    // Pastikan gambar sudah diupload
+    if (!req.file) {
+      return res.status(400).json({ error: 'Gambar harus diupload' });
+    }
+
+    // Menyimpan data anggota ke database
+    const anggota = await Anggota.create({
       namaLengkap,
       jabatan,
-      gambar,
+      periodeId,
+      gambar: req.file.path,  // Simpan path gambar di database
     });
-    res.status(201).json(newData);
+
+    res.status(201).json(anggota);  // Mengembalikan data anggota yang baru dibuat
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Terjadi kesalahan saat menambah anggota' });
   }
 });
 
