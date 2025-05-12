@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// import halaman admin dibawah:
+// Import halaman admin
 import DetailBabPasal from './admin/DetailBabPasal';
 import Register from './admin/register';
 import Masuk from './admin/masuk';
-import Adart from './admin/adart';
+import Adart from './admin/adart';s
 // import Struktur from './admin/Struktur';
 // import InputKepengurusan from './admin/InputKepengurusan';
 // import Aspirasi from './admin/Aspirasi';
@@ -14,10 +14,10 @@ import Kontak from './admin/kontak';
 import LayoutAdmin from './components/layoutAdmin';
 import StrukturKepengurusan from './admin/strukturkepengurusan';
 
-// import halaman user dibawah:
-import LayoutUser from './components/user/layoutUser';
-import Beranda from './user/beranda';
-import Aspirasi from './user/aspirasi';
+// Import halaman user
+import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
+import Beranda from './user/beranda';  // Pastikan path yang benar
+import Aspirasi from './user/aspirasi';  // Pastikan path yang benar
 
 function App() {
   return (
@@ -30,12 +30,9 @@ function App() {
         {/* Halaman-halaman yang menggunakan layout admin */}
         <Route path="/" element={<LayoutAdmin><Adart /></LayoutAdmin>} />
         <Route path="/detail-bab/:id" element={<LayoutAdmin><DetailBabPasal /></LayoutAdmin>} />
-
-        {/* <Route path="/struktur" element={<LayoutAdmin><Struktur /></LayoutAdmin>} />
-        <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} /> */}
+        <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan /></LayoutAdmin>} />
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
-        <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
 
         {/* Halaman user dengan layout user */}
         <Route path="/user" element={<LayoutUser />}>
@@ -45,6 +42,7 @@ function App() {
       </Routes>
     </Router>
   );
+
 }
 
 export default App;
