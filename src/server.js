@@ -7,6 +7,7 @@ const babsRoutes = require('./routes/babs');
 const jadwalRoutes = require('./routes/jadwal');
 const inputKepengurusanRoutes = require('./routes/InputKepengurusan');
 const kontakRoutes = require('./routes/kontak');
+const aspirasiRoutes = require('./routes/aspirasi');
 
 const app = express();
 const PORT = 3001;
@@ -20,6 +21,7 @@ app.use('/babs', babsRoutes);
 app.use('/inputKepengurusan', inputKepengurusanRoutes);
 app.use('/jadwal', jadwalRoutes);
 app.use('/kontak', kontakRoutes);
+app.use('/aspirasi', aspirasiRoutes);
 app.use('/uploads', express.static('uploads'));
 
 sequelize.sync()

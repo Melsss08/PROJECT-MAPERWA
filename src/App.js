@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+// import halaman admin dibawah:
 import Register from './admin/register';
 import Masuk from './admin/masuk';
 import Adart from './admin/adart';
@@ -10,6 +11,11 @@ import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
 import LayoutAdmin from './components/layoutAdmin';
 import StrukturKepengurusan from './admin/strukturkepengurusan';
+
+// import halaman user dibawah:
+import LayoutUser from './components/user/layoutUser';
+import Beranda from './user/beranda';
+import Aspirasi from './user/aspirasi';
 
 function App() {
   return (
@@ -24,6 +30,12 @@ function App() {
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
         <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
+
+        {/* Halaman user dengan layout user */}
+        <Route path="/user" element={<LayoutUser />}>
+          <Route path="beranda" element={<Beranda />} />
+          <Route path="aspirasi" element={<Aspirasi />} />
+        </Route>
       </Routes>
     </Router>
   );

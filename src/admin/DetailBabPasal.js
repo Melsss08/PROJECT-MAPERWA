@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaEdit } from 'react-icons/fa';
-import '../css/detailBabPasal.css';
+import '../css/cssAdmin/detailBabPasal.css';
 
 const DetailBabPasal = ({ bab, onBack }) => {
   return (

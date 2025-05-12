@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/strukturkepengurusan.css';
+import '../css/cssAdmin/strukturkepengurusan.css';
 import InputKepengurusan from './InputKepengurusan'; // Pastikan path-nya sesuai
 
 const StrukturKepengurusan = () => {
