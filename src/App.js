@@ -1,15 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetailBabPasal from './admin/DetailBabPasal';
-
 import Register from './admin/register';
 import Masuk from './admin/masuk';
-import Adart from './admin/adart';
+import Adart from './admin/adart';s
 // import Struktur from './admin/Struktur';
 // import Aspirasi from './admin/Aspirasi';
 // import Jadwal from './admin/Jadwal';
 // import Kontak from './admin/Kontak';
+// import InputKepengurusan from './admin/InputKepengurusan';
+// import Aspirasi from './admin/Aspirasi';
+import Jadwal from './admin/jadwal';
+import Kontak from './admin/kontak';
 import LayoutAdmin from './components/layoutAdmin';
+import StrukturKepengurusan from './admin/strukturkepengurusan';
 
 function App() {
   return (
@@ -27,6 +31,9 @@ function App() {
         <Route path="/aspirasi" element={<LayoutAdmin><Aspirasi /></LayoutAdmin>} />
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} /> */}
+        <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
+        <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
+        <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
       </Routes>
     </Router>
   );
