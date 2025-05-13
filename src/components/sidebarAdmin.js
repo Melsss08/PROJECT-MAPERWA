@@ -10,7 +10,7 @@ const SidebarAdmin = ({ children }) => {
         <ul>
           <li><Link to="/"><FaFile className="sidebar-icon" /> Kelola AD/ART</Link></li>
           <li><Link to="/struktur"><FaUsers className="sidebar-icon" /> Struktur Kepengurusan</Link></li>
-          <li><Link to="/aspirasi"><FaComment className="sidebar-icon" /> Kelola Aspirasi</Link></li>
+          <li><Link to="/kelolaAspirasi"><FaComment className="sidebar-icon" /> Kelola Aspirasi</Link></li>
           <li><Link to="/jadwal"><FaCalendarAlt className="sidebar-icon" /> Kelola Jadwal</Link></li>
           <li><Link to="/kontak"><FaAddressBook className="sidebar-icon" /> Kelola Kontak</Link></li>
         </ul>

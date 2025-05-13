@@ -9,6 +9,10 @@ const Aspirasi = sequelize.define('Aspirasi', {
   isi: {
     type: DataTypes.TEXT,
     allowNull: false
+  },
+  balasan: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 });
 
