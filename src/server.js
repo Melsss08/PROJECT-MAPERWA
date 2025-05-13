@@ -25,7 +25,7 @@ app.use('/jadwal', jadwalRoutes);
 app.use('/kontak', kontakRoutes);
 app.use('/aspirasi', aspirasiRoutes);
 app.use('/uploads', express.static('uploads'));
-
+ 
 sequelize.sync()
   .then(() => {
     console.log('Database terkoneksi!');

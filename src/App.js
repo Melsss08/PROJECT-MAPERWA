@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// import halaman admin dibawah:
+// Import halaman admin
 import DetailBabPasal from './admin/DetailBabPasal';
 import Register from './admin/register';
 import Masuk from './admin/masuk';
@@ -12,10 +12,10 @@ import Kontak from './admin/kontak';
 import LayoutAdmin from './components/layoutAdmin';
 // import StrukturKepengurusan from './admin/strukturkepengurusan';
 
-// import halaman user dibawah:
-import LayoutUser from './components/user/layoutUser';
-import Beranda from './user/beranda';
-import Aspirasi from './user/aspirasi';
+// Import halaman user
+import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
+import Beranda from './user/beranda';  // Pastikan path yang benar
+import Aspirasi from './user/aspirasi';  // Pastikan path yang benar
 
 function App() {
   return (
@@ -35,6 +35,10 @@ function App() {
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
         {/* <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} /> */}
 
+        <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan /></LayoutAdmin>} />
+        <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
+        <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
+
         {/* Halaman user dengan layout user */}
         <Route path="/user" element={<LayoutUser />}>
           <Route path="beranda" element={<Beranda />} />
@@ -43,6 +47,7 @@ function App() {
       </Routes>
     </Router>
   );
+
 }
 
 export default App;
