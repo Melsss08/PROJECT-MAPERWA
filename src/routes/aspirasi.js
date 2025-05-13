@@ -23,4 +23,27 @@ router.post('/', async (req, res) => {
   }
 });
 
+// DELETE aspirasi
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Aspirasi.destroy({ where: { id: req.params.id } });
+    res.json({ success: true, deleted });
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal menghapus aspirasi' });
+  }
+});
+
+// PUT balasan ke aspirasi
+router.put('/:id/balasan', async (req, res) => {
+  const { balasan } = req.body;
+  try {
+    const update = await Aspirasi.update({ balasan }, { where: { id: req.params.id } });
+    res.json({ success: true, update });
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal menyimpan balasan' });
+  }
+});
+
+
+
 module.exports = router;
