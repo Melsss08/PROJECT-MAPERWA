@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetailBabPasal from './admin/DetailBabPasal';
 import Register from './admin/register';
 import Masuk from './admin/masuk';
-import Adart from './admin/adart';s
+import Adart from './admin/adart';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 // import Struktur from './admin/Struktur';
 // import Aspirasi from './admin/Aspirasi';
 // import Jadwal from './admin/Jadwal';

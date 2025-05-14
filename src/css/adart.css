@@ -1,48 +1,60 @@
 .adart-page {
-    background-color: #D7A86E;
-    padding: 20px;
+  background-color: #D7A86E;
+  padding: 20px;
 }
 
 .adart-header {
-    display: block;
-    justify-content: space-between;
-    align-items: center;
+  display: block;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .add-button {
-    background-color: #D7A86E;
-    color: white;
-    background-color: rgba(116, 81, 45, 0.3); /* 30% dari #74512D */
-    color: white; /* ubah teks menjadi putih */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    width: fit-content;
-    text-align: center;
-    float: right;
-    margin-top: -20px;
-    transition: background-color 0.3s ease;
+  background-color: rgba(116, 81, 45, 0.3);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+  text-align: center;
+  float: right;
+  margin-top: -20px;
+  transition: background-color 0.3s ease;
 }
 
 .add-button:hover {
-    background-color: rgba(116, 81, 45, 0.5); 
+  background-color: rgba(116, 81, 45, 0.5);
 }
 
 .bab-list {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .bab-item {
-    background-color: rgba(116, 81, 45, 0.3); 
-    color: white; /* ubah teks menjadi putih */
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(116, 81, 45, 0.3);
+  color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .bab-item:hover {
-    background-color: rgba(116, 81, 45, 0.5); /* efek hover */
+  background-color: rgba(116, 81, 45, 0.5);
+}
+
+.delete-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.delete-icon:hover {
+  color: red;
 }
