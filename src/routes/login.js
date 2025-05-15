@@ -54,12 +54,42 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Password salah' });
     }
 
-    res.json({ message: 'Login berhasil!' });
+    // Tandai semua user sebagai tidak login
+    await User.update({ isLoggedIn: false }, { where: {} });
+
+    // Tandai user ini sebagai sedang login
+    await user.update({ isLoggedIn: true });
+
+    res.json({
+      message: 'Login berhasil!',
+      user: {
+        id: user.id,
+        username: user.username
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Terjadi kesalahan server' });
   }
 });
+
+
+router.post('/logout', async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ message: 'User tidak ditemukan' });
+
+    await user.update({ isLoggedIn: false });
+
+    res.json({ message: 'Logout berhasil' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Terjadi kesalahan saat logout' });
+  }
+});
+
 
 
 
