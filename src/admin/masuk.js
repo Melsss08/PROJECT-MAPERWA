@@ -17,7 +17,11 @@ const Login = () => {
         password,
       });
       setMessage(response.data.message);
-      // Jika berhasil, bisa redirect atau simpan token
+      
+      // Simpan userId ke localStorage (atau context jika pakai React Context)
+      localStorage.setItem('userId', response.data.user.id);
+      localStorage.setItem('username', response.data.user.username);
+
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.message);

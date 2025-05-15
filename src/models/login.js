@@ -13,6 +13,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isLoggedIn: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false, // awalnya tidak login
+  },
 });
 
 module.exports = User;
