@@ -13,7 +13,7 @@ const Aspirasi = sequelize.define('Aspirasi', {
   balasan: {
     type: DataTypes.TEXT,
     allowNull: true
-  }
+  },
 });
 
 module.exports = Aspirasi;

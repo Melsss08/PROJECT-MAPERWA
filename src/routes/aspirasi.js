@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     const data = await Aspirasi.findAll({ order: [['createdAt', 'DESC']] });
     res.json(data);
   } catch (err) {
+    console.error('ERROR AMBIL ASPIRASI:', err);
     res.status(500).json({ error: 'Gagal mengambil aspirasi' });
   }
 });

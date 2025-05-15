@@ -1,14 +1,24 @@
+// models/periode.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const db = require('../config/db');
 
-const Periode = sequelize.define('Periodes', {
-  namaPeriode: {
+const Periode = db.define('Periode', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  tahun: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true
+    }
   }
 }, {
-  timestamps: true, // Pastikan timestamps diaktifkan jika Anda membutuhkan createdAt dan updatedAt
-  tableName: 'periodes', // Nama tabel harus sesuai dengan yang ada di database
+  tableName: 'periode', // nama tabel di database
+  timestamps: true      // jika ingin mencatat createdAt & updatedAt
 });
 
 module.exports = Periode;

@@ -8,14 +8,27 @@ const Aspirasi = () => {
   const [isi, setIsi] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3001/aspirasi')
-      .then(res => res.json())
-      .then(data => setAspirasi(data));
-  }, []);
+  fetch('http://localhost:3001/api/aspirasi')
+    .then(res => res.json())
+    .then(data => {
+      console.log("Data aspirasi:", data);
+      if (Array.isArray(data)) {
+        setAspirasi(data);
+      } else {
+        setAspirasi([]); // fallback jika backend tidak mengembalikan array
+        console.error("Data bukan array:", data);
+      }
+    })
+    .catch(error => {
+      console.error("Fetch error:", error);
+      setAspirasi([]);
+    });
+}, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('http://localhost:3001/aspirasi', {
+    fetch('http://localhost:3001/api/aspirasi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nama, isi })
@@ -49,7 +62,7 @@ const Aspirasi = () => {
         <button type="submit">Kirim</button>
       </form>
 
-      {aspirasi.map((item) => (
+      {Array.isArray(aspirasi) && aspirasi.map((item) => (
         <div key={item.id} className="aspirasi-card">
           <div className="card-header">
             <FaUserCircle className="user-icon" />

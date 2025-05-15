@@ -9,8 +9,8 @@ import Adart from './admin/adart';
 import KelolaAspirasi from './admin/kelolaAspirasi';
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
+import StrukturKepengurusan from './admin/strukturKepengurusan';
 import LayoutAdmin from './components/layoutAdmin';
-// import StrukturKepengurusan from './admin/strukturkepengurusan';
 
 // Import halaman user
 import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
@@ -28,16 +28,10 @@ function App() {
         {/* Halaman-halaman yang menggunakan layout admin */}
         <Route path="/" element={<LayoutAdmin><Adart /></LayoutAdmin>} />
         <Route path="/detail-bab/:id" element={<LayoutAdmin><DetailBabPasal /></LayoutAdmin>} />
-
-        {/* <Route path="/struktur" element={<LayoutAdmin><Struktur /></LayoutAdmin>} /> */}
         <Route path="/kelolaAspirasi" element={<LayoutAdmin><KelolaAspirasi /></LayoutAdmin>} />
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
-        {/* <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} /> */}
-
-        <Route path="/Struktur" element={<LayoutAdmin><StrukturKepengurusan /></LayoutAdmin>} />
-        <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
-        <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
+        <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
 
         {/* Halaman user dengan layout user */}
         <Route path="/user" element={<LayoutUser />}>
