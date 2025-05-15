@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
-import '../css/detailBabPasal.css';
+import '../css/cssAdmin/detailBabPasal.css';
 
 const DetailBabPasal = () => {
   const { id } = useParams();

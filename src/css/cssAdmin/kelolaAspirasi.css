@@ -1,0 +1,96 @@
+.kelola-aspirasi-container {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.aspirasi-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f9f0e6;
+}
+
+.aspirasi-table th,
+.aspirasi-table td {
+  border: 1px solid #c8b8a6;
+  padding: 12px;
+  text-align: left;
+}
+
+.aspirasi-table th {
+  background-color: #d6a675;
+  color: white;
+}
+
+.aspirasi-table td button {
+  padding: 6px 12px;
+  background-color: #4e2d14;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #d6a675;
+  padding: 30px;
+  border-radius: 16px;
+  width: 500px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.aspirasi-nama {
+  color: #6A3F21;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.aspirasi-isi {
+  color: #6A3F21;
+  margin-bottom: 20px;
+}
+
+.textarea-balasan {
+  width: 95%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  padding: 16px;
+  font-family: inherit;
+  background-color: #c89865;
+  color: #333;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  background-color: #4e2d14;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.textarea-balasan::placeholder {
+    color: #ffffff;
+}

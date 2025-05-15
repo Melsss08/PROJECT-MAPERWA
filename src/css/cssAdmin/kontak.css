@@ -13,7 +13,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin: 5px;
   transition: background-color 0.3s;
 }
 
@@ -65,7 +65,7 @@
 
 /* Form styling */
 .kontak-form {
-  background-color: #f2d3a4;
+  background-color: #f8d7aa;
   border-radius: 20px;
   padding: 50px;
   max-width: 700px;
@@ -76,25 +76,31 @@
 
 .form-group {
   display: flex;
-  flex-direction: row; /* sejajarkan horizontal */
+  flex-direction: row;
   align-items: center;
   margin-bottom: 15px;
   width: 100%;
 }
 
 .form-group label {
-  width: 150px; /* atur lebar tetap untuk label */
+  width: 150px;
   font-weight: bold;
   margin-right: 10px;
   text-align: left;
 }
 
 .form-group input {
-  flex: 1; /* biar input mengisi sisa ruang */
+  flex: 1;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  border-radius: 12px;
+  border: none;
   min-width: 0;
+  background-color: #a97344;
+  color: #fff;
+}
+
+.form-group input::placeholder {
+  color: #fff;
 }
 
 .submit-button {
@@ -114,4 +120,55 @@
 
 .submit-button:hover {
   background-color: #8b5e2e;
+}
+
+.map-container {
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* === CONTACT LIST === */
+.contact-list {
+  background-color: #f8d7aa;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 400px;
+  margin: 30px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card {
+  background-color: #d1a06c;
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #4b2c20;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.contact-icon {
+  font-size: 18px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.contact-icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.contact-label {
+  font-weight: bold;
+  margin-right: 6px;
+  color: #3c2415;
 }

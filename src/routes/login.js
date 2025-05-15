@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const User = require('../models/login');
 
 router.post('/register', async (req, res) => {
@@ -21,7 +22,11 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Username sudah terdaftar' });
     }
 
-    await User.create({ username, password }); // Simpan hanya password
+    // Hash password sebelum disimpan
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await User.create({ username, password: hashedPassword });
 
     res.json({ message: 'Pendaftaran berhasil!' });
   } catch (err) {
@@ -44,7 +49,8 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'User tidak ditemukan' });
     }
 
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       return res.status(400).json({ message: 'Password salah' });
     }
 
@@ -54,6 +60,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan server' });
   }
 });
+
 
 
 module.exports = router;
