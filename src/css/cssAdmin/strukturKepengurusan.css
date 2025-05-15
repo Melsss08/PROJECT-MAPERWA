@@ -1,0 +1,65 @@
+.struktur-container {
+  background: #e9c89b;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: auto;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.input-periode {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: none;
+  background: #c49b6c;
+  color: white;
+  font-size: 16px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  background: #c49b6c;
+  margin: 5px auto;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #5b3210;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-tambah-periode {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #a87e56;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-tambah-periode:hover {
+  background-color: #8f6747;
+}
