@@ -14,7 +14,6 @@ const PORT = 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
-
 // Gunakan rute secara terpisah
 app.use('/', loginRoutes);
 app.use('/api/babs', babsRoutes); 
@@ -36,7 +35,34 @@ sequelize.sync({ force: true })
   .catch(err => {
     console.error('Gagal koneksi DB:', err);
   });
+const multer = require('multer');
+
+// Tentukan penyimpanan gambar
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/'); // Tentukan folder penyimpanan gambar
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Menggunakan nama file unik
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Rute untuk menangani pengiriman data termasuk gambar
+app.post('/inputKepengurusan', upload.single('gambar'), (req, res) => {
+  const { periodeTahun, namaLengkap, jabatan } = req.body;
+  const gambar = req.file ? req.file.path : null;
+
+  // Simpan data ke database
+  // Contoh:
+  // Database.insert({ periodeTahun, namaLengkap, jabatan, gambar });
+
+  res.send('Data berhasil disimpan');
+});
+
 
 sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
   .catch((err) => console.error('Gagal koneksi DB:', err));
+
