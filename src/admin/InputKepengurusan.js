@@ -12,21 +12,26 @@ const InputKepengurusan = ({ onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validasi form
     if (!periodeTahun.trim() || !namaLengkap.trim() || !jabatan.trim() || !gambar) {
       alert('Semua kolom wajib diisi!');
       return;
     }
     
+    // Membuat FormData untuk mengirim data termasuk gambar
     const formData = new FormData();
     formData.append('periodeTahun', periodeTahun);
     formData.append('namaLengkap', namaLengkap);
     formData.append('jabatan', jabatan);
-    if (gambar) {
-      formData.append('gambar', gambar);
-    }
+    formData.append('gambar', gambar);
 
     try {
-      await axios.post('http://localhost:3001/inputKepengurusan', formData);
+      // Mengirim data ke server dengan POST request
+      await axios.post('http://localhost:3001/inputKepengurusan', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Jangan set Content-Type saat menggunakan FormData
+        },
+      });
       alert('Data berhasil disimpan');
       onCancel();
     } catch (error) {
@@ -75,6 +80,7 @@ const InputKepengurusan = ({ onCancel }) => {
             type="file"
             accept="image/*"
             onChange={(e) => setGambar(e.target.files[0])}
+            required // Pastikan gambar wajib diupload
           />
           <FaUpload className="icon" />
         </div>
