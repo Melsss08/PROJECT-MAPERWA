@@ -6,25 +6,25 @@ const Aspirasi = () => {
   const [aspirasi, setAspirasi] = useState([]);
   const [nama, setNama] = useState('');
   const [isi, setIsi] = useState('');
+  const [openBalasanId, setOpenBalasanId] = useState(null); // untuk toggle balasan
 
   useEffect(() => {
-  fetch('http://localhost:3001/api/aspirasi')
-    .then(res => res.json())
-    .then(data => {
-      console.log("Data aspirasi:", data);
-      if (Array.isArray(data)) {
-        setAspirasi(data);
-      } else {
-        setAspirasi([]); // fallback jika backend tidak mengembalikan array
-        console.error("Data bukan array:", data);
-      }
-    })
-    .catch(error => {
-      console.error("Fetch error:", error);
-      setAspirasi([]);
-    });
-}, []);
-
+    fetch('http://localhost:3001/api/aspirasi')
+      .then(res => res.json())
+      .then(data => {
+        console.log("Data aspirasi:", data);
+        if (Array.isArray(data)) {
+          setAspirasi(data);
+        } else {
+          setAspirasi([]);
+          console.error("Data bukan array:", data);
+        }
+      })
+      .catch(error => {
+        console.error("Fetch error:", error);
+        setAspirasi([]);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,6 +39,10 @@ const Aspirasi = () => {
         setNama('');
         setIsi('');
       });
+  };
+
+  const toggleBalasan = (id) => {
+    setOpenBalasanId(openBalasanId === id ? null : id);
   };
 
   return (
@@ -69,7 +73,27 @@ const Aspirasi = () => {
             <strong>{item.nama}</strong>
           </div>
           <p>{item.isi}</p>
-          <div className="lihat-balasan">Lihat balasan......</div>
+
+          <div
+            className="lihat-balasan"
+            style={{ cursor: 'pointer', color: 'blue' }}
+            onClick={() => toggleBalasan(item.id)}
+          >
+            {openBalasanId === item.id ? 'Sembunyikan balasan' : 'Lihat balasan......'}
+          </div>
+
+          {openBalasanId === item.id && (
+            item.balasan ? (
+              <div className="balasan-admin">
+                <strong>Balasan Admin:</strong>
+                <p>{item.balasan}</p>
+              </div>
+            ) : (
+              <div className="balasan-admin">
+                <em>Belum ada balasan dari admin.</em>
+              </div>
+            )
+          )}
         </div>
       ))}
     </div>
