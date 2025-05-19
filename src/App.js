@@ -27,6 +27,9 @@ import LayoutAdmin from './components/layoutAdmin';
 import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
 import Beranda from './user/beranda';  // Pastikan path yang benar
 import Aspirasi from './user/aspirasi';  // Pastikan path yang benar
+import PengumumanUser from './user/pengumumanUser';
+import ContactCard from './user/ContactCard';
+import Sejarah from './user/Sejarah';
 
 function App() {
   return (
@@ -43,11 +46,14 @@ function App() {
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
         <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
-
+      
         {/* Halaman user dengan layout user */}
         <Route path="/user" element={<LayoutUser />}>
           <Route path="beranda" element={<Beranda />} />
           <Route path="aspirasi" element={<Aspirasi />} />
+          <Route path="pengumuman" element={<PengumumanUser />} />
+          <Route path="kontak" element={<ContactCard />} />
+           <Route path="tentang" element={<Sejarah/>} />
         </Route>
       </Routes>
     </Router>

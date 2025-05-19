@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import '../css/cssAdmin/strukturKepengurusan.css';
 
 const StrukturKepengurusan = () => {
@@ -6,6 +7,8 @@ const StrukturKepengurusan = () => {
   const [daftarPeriode, setDaftarPeriode] = useState([]);
   const [showFormPeriode, setShowFormPeriode] = useState(false);
   const [selectedPeriode, setSelectedPeriode] = useState(null);
+  const [pengurus, setPengurus] = useState([]);
+  const [showDetailView, setShowDetailView] = useState(false);
 
   // Form struktur pengurus
   const [nama, setNama] = useState('');
@@ -21,7 +24,6 @@ const StrukturKepengurusan = () => {
     fetch('http://localhost:3001/periode')
       .then(res => res.json())
       .then(data => {
-        // Pastikan data terbaru berada di bagian atas
         const sortedData = [...data].sort((a, b) => b.id - a.id);
         setDaftarPeriode(sortedData);
       })
@@ -47,7 +49,6 @@ const StrukturKepengurusan = () => {
 
       const data = await response.json();
       if (response.ok) {
-        // Menambahkan periode baru di awal array (posisi teratas)
         setDaftarPeriode(prev => [data, ...prev]);
         setTahun('');
         setShowFormPeriode(false);
@@ -161,7 +162,7 @@ const StrukturKepengurusan = () => {
               className="periode-item"
               onClick={() => handlePilihPeriode(item)}
             >
-              <span> {item.tahun}</span>
+              <span>{item.tahun}</span>
               <span className="view-periode">Lihat Detail</span>
             </div>
           ))}
@@ -174,7 +175,7 @@ const StrukturKepengurusan = () => {
   return (
     <div className="struktur-detail-container">
       <h2 className="periode-title">PERIODE TAHUN {selectedPeriode?.tahun}</h2>
-      
+
       {!showAddPengurus ? (
         <>
           <div className="pengurus-actions">
@@ -182,7 +183,7 @@ const StrukturKepengurusan = () => {
               + Tambah Pengurus
             </button>
           </div>
-          
+
           <div className="pengurus-table-container">
             <table className="pengurus-table">
               <thead>
@@ -200,9 +201,9 @@ const StrukturKepengurusan = () => {
                     <tr key={item.id}>
                       <td className="gambar-cell">
                         {item.gambarUrl ? (
-                          <img 
-                            src={`http://localhost:3001/${item.gambarUrl}`} 
-                            alt={item.nama} 
+                          <img
+                            src={`http://localhost:3001/${item.gambarUrl}`}
+                            alt={item.nama}
                             className="pengurus-image"
                           />
                         ) : (
@@ -216,7 +217,7 @@ const StrukturKepengurusan = () => {
                         <button className="btn-icon edit">
                           <FaEdit />
                         </button>
-                        <button 
+                        <button
                           className="btn-icon delete"
                           onClick={() => handleDeletePengurus(item.id)}
                         >
@@ -233,7 +234,7 @@ const StrukturKepengurusan = () => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="btn-kembali-container">
             <button className="btn-kembali" onClick={handleKembali}>
               Kembali

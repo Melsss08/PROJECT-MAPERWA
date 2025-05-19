@@ -1,6 +1,7 @@
 // models/periode.js
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
+const { upload } = require('../server');
 
 const Periode = db.define('Periode', {
   id: {
