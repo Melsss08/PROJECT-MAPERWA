@@ -67,3 +67,5 @@ sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
   .catch((err) => console.error('Gagal koneksi DB:', err));
 
+// bagian bawah server.js
+module.exports = { upload };
