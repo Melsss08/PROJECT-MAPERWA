@@ -38,7 +38,7 @@ const InputBab = ({ onCancel, onBabAdded }) => {
         onBabAdded();
 
         // Navigasi ke halaman Adart setelah berhasil menambah bab
-        navigate('/'); // Redirect ke halaman Adart
+        navigate('/adart'); // Redirect ke halaman Adart
       } else {
         alert(`Gagal menambah bab: ${data.error}`);
       }
