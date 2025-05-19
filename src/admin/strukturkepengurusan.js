@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../css/cssAdmin/strukturKepengurusan.css';
-import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const StrukturKepengurusan = () => {
   const [tahun, setTahun] = useState('');
   const [daftarPeriode, setDaftarPeriode] = useState([]);
   const [showFormPeriode, setShowFormPeriode] = useState(false);
   const [selectedPeriode, setSelectedPeriode] = useState(null);
-  const [pengurus, setPengurus] = useState([]);
-  const [showDetailView, setShowDetailView] = useState(false);
 
   // Form struktur pengurus
   const [nama, setNama] = useState('');
