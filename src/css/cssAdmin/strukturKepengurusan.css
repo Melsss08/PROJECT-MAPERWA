@@ -1,11 +1,94 @@
 .struktur-container {
-  background: #e9c89b;
+  background-color: #D7A86E;
   padding: 20px;
-  border-radius: 12px;
-  max-width: 600px;
-  margin: auto;
+  
   font-family: sans-serif;
+  min-height: 80vh;
+}
+
+.struktur-detail-container {
+  background-color: #D7A86E;
+  padding: 20px;
+  font-family: sans-serif;
+  min-height: 80vh;
+}
+
+/* Gaya untuk periode header */
+.periode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.periode-header h4 {
+  color: white;
+  margin: 0;
+}
+
+/* Gaya untuk judul dan header */
+.struktur-container h4 {
+  margin-top: 10px;
+  color: white;
+}
+
+/* Gaya untuk tampilan daftar periode */
+.periode-list {
+  margin-top: 15px;
+}
+
+.periode-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(116, 81, 45, 0.3);
+  color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.periode-item:hover {
+  background-color: rgba(116, 81, 45, 0.5);
+}
+
+.view-periode {
+  font-size: 0.9em;
+  color: #f0e0ca;
+}
+
+/* Gaya untuk tombol tambah periode */
+.btn-tambah-periode {
+  background-color: rgba(116, 81, 45, 0.3);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
   text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-tambah-periode:hover {
+  background-color: rgba(116, 81, 45, 0.5);
+}
+
+/* Gaya untuk form periode */
+.periode-form {
+  background-color: rgba(116, 81, 45, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.periode-form h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 .input-periode {
@@ -13,53 +96,191 @@
   padding: 10px;
   margin-top: 8px;
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
-  background: #c49b6c;
-  color: white;
+  background: white;
+  color: #333;
   font-size: 16px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+/* Gaya untuk form struktur */
+.form-struktur {
+  background-color: rgba(116, 81, 45, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: left;
 }
 
-ul li {
-  background: #c49b6c;
-  margin: 5px auto;
-  padding: 10px;
-  border-radius: 10px;
+.form-struktur h3 {
   color: white;
-  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
+.form-struktur label {
+  display: block;
+  color: white;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.form-struktur input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+/* Gaya untuk wrapper tombol */
 .btn-wrapper {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 20px;
 }
 
-button {
+.btn-wrapper button {
   padding: 8px 16px;
-  background-color: #5b3210;
+  background-color: rgba(116, 81, 45, 0.6);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.btn-tambah-periode {
+.btn-wrapper button:hover {
+  background-color: rgba(116, 81, 45, 0.8);
+}
+
+/* Gaya untuk detail periode */
+.periode-title {
+  color: #5b3210;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.pengurus-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn-add-pengurus {
+  background-color: rgba(116, 81, 45, 0.3);
+  color: white;
+  border: none;
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: #a87e56;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
-.btn-tambah-periode:hover {
-  background-color: #8f6747;
+.btn-add-pengurus:hover {
+  background-color: rgba(116, 81, 45, 0.5);
+}
+
+/* Gaya untuk tabel pengurus */
+.pengurus-table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.pengurus-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(116, 81, 45, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pengurus-table th, 
+.pengurus-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(116, 81, 45, 0.2);
+}
+
+.pengurus-table th {
+  background-color: rgba(116, 81, 45, 0.3);
+  color: white;
+  font-weight: bold;
+}
+
+.pengurus-table tr:hover {
+  background-color: rgba(116, 81, 45, 0.2);
+}
+
+.pengurus-table .no-data {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.gambar-cell {
+  width: 80px;
+  text-align: center;
+}
+
+.pengurus-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.placeholder-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: inline-block;
+}
+
+.action-cell {
+  width: 100px;
+  text-align: center;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 16px;
+}
+
+.btn-icon.edit {
+  color: #008cba;
+}
+
+.btn-icon.delete {
+  color: #d9534f;
+}
+
+/* Gaya untuk tombol kembali */
+.btn-kembali-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-kembali {
+  background-color: rgba(116, 81, 45, 0.5);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-kembali:hover {
+  background-color: rgba(116, 81, 45, 0.7);
 }
