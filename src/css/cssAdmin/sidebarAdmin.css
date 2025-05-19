@@ -39,14 +39,15 @@
 
 /* Mengubah warna ikon */
 .sidebar a svg {
-  color: #8C5630; /* Menambahkan warna untuk ikon */
+  color: #8C5630; 
 }
 
+/* Hover dan Active state — diperhalus */
 .sidebar a:hover,
 .sidebar a.active {
-  background-color: #c8a986;
+  background-color: rgba(200, 169, 134, 0.3); /* Warna highlight halus */
   color: #3c2415;
-  transform: translateX(5px); /* Menambahkan efek geser saat hover */
+  transform: translateX(5px); /* Efek geser saat hover */
 }
 
 .content {
