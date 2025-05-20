@@ -6,21 +6,10 @@ import DetailBabPasal from './admin/DetailBabPasal';
 import Register from './admin/register';
 import Masuk from './admin/masuk';
 import Adart from './admin/adart';
-
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
-// import Struktur from './admin/Struktur';
-// import Aspirasi from './admin/Aspirasi';
-// import Jadwal from './admin/Jadwal';
-// import Kontak from './admin/Kontak';
-// import InputKepengurusan from './admin/InputKepengurusan';
-// import Aspirasi from './admin/Aspirasi';
-
 import KelolaAspirasi from './admin/kelolaAspirasi';
-
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
-import StrukturKepengurusan from './admin/strukturKepengurusan';
+import StrukturKepengurusan from './admin/strukturkepengurusan';
 import KelolaBeranda from './admin/kelolaBeranda';
 import LayoutAdmin from './components/layoutAdmin';
 
@@ -28,9 +17,6 @@ import LayoutAdmin from './components/layoutAdmin';
 import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
 import Beranda from './user/beranda';  // Pastikan path yang benar
 import Aspirasi from './user/aspirasi';  // Pastikan path yang benar
-import PengumumanUser from './user/pengumumanUser';
-import ContactCard from './user/ContactCard';
-import Sejarah from './user/Sejarah';
 
 function App() {
   return (
@@ -53,9 +39,6 @@ function App() {
         <Route path="/user" element={<LayoutUser />}>
           <Route path="beranda" element={<Beranda />} />
           <Route path="aspirasi" element={<Aspirasi />} />
-          <Route path="pengumuman" element={<PengumumanUser />} />
-          <Route path="kontak" element={<ContactCard />} />
-           <Route path="tentang" element={<Sejarah/>} />
         </Route>
       </Routes>
     </Router>

@@ -1,75 +1,64 @@
-.container {
-  max-width: 600px;
-  margin: 40px auto;
-  background-color: #f5e4cc;
-  padding: 30px;
+.beranda-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.beranda-container h2 {
   text-align: center;
-  color: #6b3e26;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-form label {
+.form-beranda .form-group {
+  margin-bottom: 15px;
+}
+
+.form-beranda label {
   display: block;
-  margin-bottom: 6px;
   font-weight: bold;
-  color: #6b3e26;
+  margin-bottom: 5px;
+  color: #444;
 }
 
-form input[type="text"],
-form textarea {
+.form-beranda textarea {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #c2a88b;
-  border-radius: 6px;
-  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   resize: vertical;
-  background-color: #fffaf3;
-}
-
-form textarea:focus,
-form input:focus {
-  outline: none;
-  border-color: #a8744e;
-  box-shadow: 0 0 3px #a8744e;
-}
-
-button[type="submit"] {
-  background-color: #a8744e;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto;
-  transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background-color: #8c5e3c;
-}
-
-.edit-button {
-  background-color: #a8744e;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
   font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
 }
 
-.edit-button:hover {
-  background-color: #8c5e3c;
+.submit-btn,
+.edit-btn {
+  padding: 10px 20px;
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-btn:hover,
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.beranda-preview .card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.beranda-preview h4 {
+  margin-bottom: 10px;
+  color: #222;
 }

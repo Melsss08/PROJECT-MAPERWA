@@ -1,24 +1,36 @@
-const express = require("express");
-const KelolaBeranda = require("../models/kelolaBeranda");
+const express = require('express');
 const router = express.Router();
+const KelolaBeranda = require('../models/kelolaBeranda');
 
-router.post("/", async (req, res) => {
+// GET data terakhir beranda
+router.get('/', async (req, res) => {
   try {
-    const { judul, visi, misi } = req.body;
-    const data = await KelolaBeranda.create({ judul, visi, misi });
-    res.status(201).json({ message: "Berhasil disimpan", data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Gagal menyimpan data" });
+    const data = await KelolaBeranda.findOne({ order: [['createdAt', 'DESC']] });
+    res.json(data || {});
+  } catch (err) {
+    console.error('ERROR AMBIL DATA BERANDA:', err);
+    res.status(500).json({ error: 'Gagal mengambil data beranda' });
   }
 });
 
-router.get("/", async (req, res) => {
+// POST data baru beranda
+router.post('/', async (req, res) => {
+  const { visi, misi } = req.body;
   try {
-    const data = await KelolaBeranda.findOne({ order: [['createdAt', 'DESC']] });
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(500).json({ message: "Gagal mengambil data" });
+    const newData = await KelolaBeranda.create({ visi, misi });
+    res.status(201).json(newData);
+  } catch (err) {
+    res.status(400).json({ error: 'Gagal menyimpan data beranda' });
+  }
+});
+
+// DELETE (jika dibutuhkan nanti)
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await KelolaBeranda.destroy({ where: { id: req.params.id } });
+    res.json({ success: true, deleted });
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal menghapus data beranda' });
   }
 });
 
