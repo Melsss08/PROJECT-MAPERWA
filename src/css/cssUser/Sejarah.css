@@ -1,0 +1,61 @@
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: 'Poppins', sans-serif;
+  padding: 2rem;
+  border-radius: 12px;
+  color: #6a4c2b;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background-color: #f4e8d4;
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.sejarah-card {
+  flex-wrap: wrap;
+}
+
+.sejarah-text {
+  flex: 1 1 70%;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-right: 1rem;
+}
+
+.sejarah-icon img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.demisioner-card {
+  justify-content: flex-start;
+  gap: 20px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.icon-left {
+  font-size: 20px;
+  cursor: pointer;
+  color: #6a4c2b;
+}
+
+.demisioner-text {
+  text-align: left;
+  line-height: 1.2;
+}

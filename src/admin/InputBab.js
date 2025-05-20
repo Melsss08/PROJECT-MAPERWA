@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import '../css/cssAdmin/inputBab.css';
 import { FaPlus } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const InputBab = ({ onCancel, onBabAdded }) => {
   const [judul, setJudul] = useState('');
   const [subJudul, setSubJudul] = useState('');
   const [pasal, setPasal] = useState('');
   const [isi, setIsi] = useState('');
-  const navigate = useNavigate(); // Inisialisasi navigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ const InputBab = ({ onCancel, onBabAdded }) => {
         onBabAdded();
 
         // Navigasi ke halaman Adart setelah berhasil menambah bab
-        navigate('/'); // Redirect ke halaman Adart
+        navigate('/adart'); // Redirect ke halaman Adart
       } else {
         alert(`Gagal menambah bab: ${data.error}`);
       }
@@ -89,7 +89,6 @@ const InputBab = ({ onCancel, onBabAdded }) => {
             onChange={(e) => setIsi(e.target.value)}
           />
         </div>
-
         <div className="button-group">
           <button type="button" className="btn cancel" onClick={onCancel}>
             Batal
@@ -102,5 +101,4 @@ const InputBab = ({ onCancel, onBabAdded }) => {
     </div>
   );
 };
-
 export default InputBab;

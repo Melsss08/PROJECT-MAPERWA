@@ -78,5 +78,26 @@ router.get('/', async (req, res) => {
     res.status(400).json({ error: 'Gagal mengambil data periode' });
   }
 });
+router.post('/tambah', upload.single('gambar'), async (req, res) => {
+  try {
+    const { namaLengkap, jabatan, periodeId } = req.body;
+
+    if (!namaLengkap || !jabatan || !periodeId) {
+      return res.status(400).json({ error: 'Semua field wajib diisi' });
+    }
+
+    const newAnggota = await Anggota.create({
+      namaLengkap,
+      jabatan,
+      periodeId,
+      gambar: req.file ? req.file.path : null,
+    });
+
+    res.status(201).json(newAnggota);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Gagal menambah anggota' });
+  }
+});
 
 module.exports = router;

@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   padding-top: 30px;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1); /* Menambahkan shadow pada sidebar */
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul {
@@ -34,19 +34,27 @@
   font-size: 15px;
   transition: all 0.3s ease;
   gap: 12px;
-  border-radius: 4px; /* Tambahkan border-radius untuk sudut yang lebih halus */
+
 }
 
 /* Mengubah warna ikon */
 .sidebar a svg {
-  color: #8C5630; /* Menambahkan warna untuk ikon */
+
+  color: #8C5630; 
+
+  color: #8C5630;
+
 }
 
+/* Hover dan Active state — diperhalus */
 .sidebar a:hover,
 .sidebar a.active {
-  background-color: #c8a986;
+  background-color: rgba(200, 169, 134, 0.3); /* Warna highlight halus */
   color: #3c2415;
-  transform: translateX(5px); /* Menambahkan efek geser saat hover */
+  transform: translateX(5px); /* Efek geser saat hover */
+  background-color: #e2c6a0; /* Warna background lebih ringan saat hover */
+  color: #3c2415;
+
 }
 
 .content {
@@ -71,3 +79,4 @@
     padding: 20px; /* Mengurangi padding di konten untuk perangkat kecil */
   }
 }
+
