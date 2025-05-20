@@ -10,6 +10,7 @@ import KelolaAspirasi from './admin/kelolaAspirasi';
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
 import StrukturKepengurusan from './admin/strukturKepengurusan';
+import KelolaBeranda from './admin/kelolaBeranda';
 import LayoutAdmin from './components/layoutAdmin';
 
 // Import halaman user
@@ -32,6 +33,7 @@ function App() {
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
         <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
+        <Route path="/kelolaBeranda" element={<LayoutAdmin><KelolaBeranda/></LayoutAdmin>} />
 
         {/* Halaman user dengan layout user */}
         <Route path="/user" element={<LayoutUser />}>

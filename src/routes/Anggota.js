@@ -1,7 +1,7 @@
 const express = require('express');
 const { upload } = require('../server'); // Mengimpor upload dari server.js
 const Anggota = require('../models/Anggota');  // Pastikan model Anggota sudah diimport
-const Periode = require('../models/Periode');
+const Periode = require('../models/periode');
 const router = express.Router();
 
 // Update anggota, dengan upload gambar

@@ -8,11 +8,13 @@ const jadwalRoutes = require('./routes/jadwal');
 const kontakRoutes = require('./routes/kontak');
 const aspirasiRoutes = require('./routes/aspirasi');
 const periodeRoutes = require('./routes/Periode');
+const kelolaBerandaRoutes = require('./routes/kelolaBeranda');
 
 const app = express();
 const PORT = 3001;
 
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json());
 
 // Gunakan rute secara terpisah
@@ -24,9 +26,10 @@ app.use('/jadwal', jadwalRoutes);
 app.use('/kontak', kontakRoutes);
 app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
+app.use('/kelolaBeranda', kelolaBerandaRoutes);
 app.use('/uploads', express.static('uploads'));
  
-sequelize.sync({ force: true })
+sequelize.sync()
   .then(() => {
     console.log('Database terkoneksi!');
     app.listen(PORT, () => {
