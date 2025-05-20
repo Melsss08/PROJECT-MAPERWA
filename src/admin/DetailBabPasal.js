@@ -23,16 +23,14 @@ const DetailBabPasal = () => {
         const response = await axios.get(`http://localhost:3001/api/babs/${id}`);
         setBabDetail(response.data);
         setFormData(response.data);
-        setLoading(false);
       } catch (error) {
         console.error('Gagal mengambil data bab:', error);
+      } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      fetchBabDetail();
-    }
+    if (id) fetchBabDetail();
   }, [id]);
 
   const handleEditToggle = () => {
@@ -41,10 +39,7 @@ const DetailBabPasal = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSave = async () => {
@@ -70,9 +65,24 @@ const DetailBabPasal = () => {
         <div className="title-section">
           {isEditing ? (
             <>
-              <input name="judul" value={formData.judul} onChange={handleInputChange} />
-              <input name="subJudul" value={formData.subJudul} onChange={handleInputChange} />
-              <input name="pasal" value={formData.pasal} onChange={handleInputChange} />
+              <input
+                className="input-title"
+                name="judul"
+                value={formData.judul}
+                onChange={handleInputChange}
+              />
+              <input
+                className="input-title"
+                name="subJudul"
+                value={formData.subJudul}
+                onChange={handleInputChange}
+              />
+              <input
+                className="input-title"
+                name="pasal"
+                value={formData.pasal}
+                onChange={handleInputChange}
+              />
             </>
           ) : (
             <>
@@ -85,19 +95,26 @@ const DetailBabPasal = () => {
 
         <div className="content-box">
           {isEditing ? (
-            <>
-              <textarea name="isi" value={formData.isi} onChange={handleInputChange} />
-            </>
+            <textarea
+              className="textarea-content"
+              name="isi"
+              value={formData.isi}
+              onChange={handleInputChange}
+            />
           ) : (
-            <>
-              <p>{babDetail.isi}</p>
-            </>
+            <p>{babDetail.isi}</p>
           )}
         </div>
 
         <div className="button-container">
-          <button className="back-button" onClick={() => navigate(-1)}>Kembali</button>
-          {isEditing && <button className="save-button" onClick={handleSave}>Simpan</button>}
+          <button className="back-button" onClick={() => navigate(-1)}>
+            Kembali
+          </button>
+          {isEditing && (
+            <button className="save-button" onClick={handleSave}>
+              Simpan
+            </button>
+          )}
         </div>
       </div>
     </div>

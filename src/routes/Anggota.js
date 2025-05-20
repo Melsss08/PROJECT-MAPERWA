@@ -1,4 +1,7 @@
 const express = require('express');
+const { upload } = require('../server'); // Mengimpor upload dari server.js
+const Anggota = require('../models/Anggota');  // Pastikan model Anggota sudah diimport
+const Periode = require('../models/periode');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
@@ -123,8 +126,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Gagal menghapus data pengurus' });
   }
 });
-
-
 
 
 module.exports = router;

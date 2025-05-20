@@ -17,7 +17,6 @@ const jadwalRoutes = require('./routes/jadwal');
 const kontakRoutes = require('./routes/kontak');
 const aspirasiRoutes = require('./routes/aspirasi');
 const periodeRoutes = require('./routes/Periode');
-const anggotaRoutes = require('./routes/Anggota');
 
 const app = express();
 const PORT = 3001;
@@ -39,10 +38,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Tentukan penyimpanan gambar
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, 'uploads/'); // Tentukan folder penyimpanan gambar
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + '-' + file.originalname); // Menggunakan nama file unik
   }
 });
 
@@ -50,30 +49,27 @@ const upload = multer({ storage: storage });
 
 // Gunakan rute secara terpisah
 app.use('/', loginRoutes);
-app.use('/api/babs', babsRoutes); 
+app.use('/api/babs', babsRoutes);
 app.use('/api/jadwal', jadwalRoutes);
 app.use('/babs', babsRoutes);
 app.use('/jadwal', jadwalRoutes);
 app.use('/kontak', kontakRoutes);
 app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
-app.use('/anggota', anggotaRoutes);
-app.use('/struktur', anggotaRoutes); // Tambahkan alias untuk route anggota
+app.use('/uploads', express.static('uploads'));
 
 // Rute untuk menangani pengiriman data termasuk gambar
 app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
   try {
     console.log('Request Body:', req.body);
     console.log('Request File:', req.file);
-    
-    const { periodeTahun, namaLengkap, jabatan } = req.body;
-    
+
     // Validasi input
+    const { periodeTahun, namaLengkap, jabatan } = req.body;
     if (!periodeTahun || !namaLengkap || !jabatan) {
       return res.status(400).json({ error: 'Semua field harus diisi' });
     }
 
-    
     // Cari atau buat Periode
     let periode;
     try {
@@ -90,26 +86,39 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
     const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
 
     // Simpan data ke database
+    // Contoh simpan data ke tabel Anggota:
     try {
-      const newAnggota = await Anggota.create({
-        namaLengkap: namaLengkap,
-        jabatan: jabatan,
-        periodeId: periode.id,
+      await Anggota.create({
+        periodeTahun,
+        namaLengkap,
+        jabatan,
         gambar: gambarPath
       });
-      
-      console.log('Anggota baru berhasil dibuat:', newAnggota);
-      res.status(201).json({ 
-        success: true, 
-        message: 'Data berhasil disimpan',
-        data: newAnggota 
-      });
+      res.send('Data berhasil disimpan');
     } catch (error) {
-      console.error('Error saat membuat anggota:', error);
-      res.status(500).json({ error: 'Gagal menambahkan anggota pengurus' });
+      console.error('Error saat menyimpan data anggota:', error);
+      res.status(500).json({ error: 'Gagal menyimpan data anggota' });
     }
-  } catch (err) {
-    console.error('Error umum:', err);
-    res.status(500).json({ error: 'Terjadi kesalahan saat menyimpan data' });
+  } catch (error) {
+    console.error('Terjadi kesalahan:', error);
+    res.status(500).json({ error: 'Terjadi kesalahan pada server' });
   }
 });
+
+// Koneksi ke database dan menjalankan server
+sequelize.sync({ force: true })
+  .then(() => {
+    console.log('Database terkoneksi!');
+    app.listen(PORT, () => {
+      console.log(`Server berjalan di http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Gagal koneksi DB:', err);
+  });
+
+sequelize.authenticate()
+  .then(() => console.log('Koneksi DB berhasil.'))
+  .catch((err) => console.error('Gagal koneksi DB:', err));
+
+  

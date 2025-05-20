@@ -1,7 +1,7 @@
 // routes/periode.js
 const express = require('express');
 const router = express.Router();
-const Periode = require('../models/periode');
+const Periode = require('../models/Periode');
 
 // Tambah Periode
 router.post('/', async (req, res) => {

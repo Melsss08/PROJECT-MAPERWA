@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import '../css/cssAdmin/strukturKepengurusan.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import axios from 'axios';
 
 const StrukturKepengurusan = () => {
   const [tahun, setTahun] = useState('');
@@ -23,16 +23,15 @@ const StrukturKepengurusan = () => {
     fetchPeriode();
   }, []);
 
-  const fetchPeriode = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/periode');
-      // Pastikan data terbaru berada di bagian atas
-      const sortedData = [...response.data].sort((a, b) => b.id - a.id);
-      setDaftarPeriode(sortedData);
-    } catch (err) {
-      console.error('Failed to fetch periods:', err);
-      setError('Gagal mengambil data periode');
-    }
+  const fetchPeriode = () => {
+    fetch('http://localhost:3001/periode')
+      .then(res => res.json())
+      .then(data => {
+        // Pastikan data terbaru berada di bagian atas
+        const sortedData = [...data].sort((a, b) => b.id - a.id);
+        setDaftarPeriode(sortedData);
+      })
+      .catch(err => console.error(err));
   };
 
   const fetchPengurus = async (periodeId) => {
@@ -55,11 +54,21 @@ const StrukturKepengurusan = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:3001/periode', { tahun });
-      // Menambahkan periode baru di awal array (posisi teratas)
-      setDaftarPeriode(prev => [response.data, ...prev]);
-      setTahun('');
-      setShowFormPeriode(false);
+      const response = await fetch('http://localhost:3001/periode', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tahun }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        // Menambahkan periode baru di awal array (posisi teratas)
+        setDaftarPeriode(prev => [data, ...prev]);
+        setTahun('');
+        setShowFormPeriode(false);
+      } else {
+        alert(data.error || 'Gagal menambahkan');
+      }
     } catch (err) {
       console.error('Failed to add period:', err);
       setError(err.response?.data?.error || 'Gagal menambahkan periode');
@@ -177,20 +186,16 @@ const StrukturKepengurusan = () => {
         )}
 
         <div className="periode-list">
-          {daftarPeriode.length > 0 ? (
-            daftarPeriode.map((item) => (
-              <div
-                key={item.id}
-                className="periode-item"
-                onClick={() => handlePilihPeriode(item)}
-              >
-                <span>{item.tahun}</span>
-                <span className="view-periode">Lihat Detail</span>
-              </div>
-            ))
-          ) : (
-            <div className="no-data">Belum ada periode</div>
-          )}
+          {daftarPeriode.map((item) => (
+            <div
+              key={item.id}
+              className="periode-item"
+              onClick={() => handlePilihPeriode(item)}
+            >
+              <span> {item.tahun}</span>
+              <span className="view-periode">Lihat Detail</span>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -202,7 +207,7 @@ const StrukturKepengurusan = () => {
       {error && <div className="error-message">{error}</div>}
       
       <h2 className="periode-title">PERIODE TAHUN {selectedPeriode?.tahun}</h2>
-      
+
       {!showAddPengurus ? (
         <>
           <div className="pengurus-actions">
@@ -210,7 +215,7 @@ const StrukturKepengurusan = () => {
               + Tambah Pengurus
             </button>
           </div>
-          
+
           <div className="pengurus-table-container">
             <table className="pengurus-table">
               <thead>
@@ -228,9 +233,9 @@ const StrukturKepengurusan = () => {
                     <tr key={item.id}>
                       <td className="gambar-cell">
                         {item.gambarUrl ? (
-                          <img 
-                            src={`http://localhost:3001/${item.gambarUrl}`} 
-                            alt={item.nama} 
+                          <img
+                            src={`http://localhost:3001/${item.gambarUrl}`}
+                            alt={item.nama}
                             className="pengurus-image"
                             onError={(e) => {
                               e.target.onerror = null;
@@ -248,7 +253,7 @@ const StrukturKepengurusan = () => {
                         <button className="btn-icon edit">
                           <FaEdit />
                         </button>
-                        <button 
+                        <button
                           className="btn-icon delete"
                           onClick={() => handleDeletePengurus(item.id)}
                         >
@@ -265,7 +270,7 @@ const StrukturKepengurusan = () => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="btn-kembali-container">
             <button className="btn-kembali" onClick={handleKembali}>
               Kembali
