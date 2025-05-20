@@ -3,6 +3,8 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import '../css/cssAdmin/strukturKepengurusan.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
+// perubahan kecil agar bisa commit
+
 const StrukturKepengurusan = () => {
   const [tahun, setTahun] = useState('');
   const [daftarPeriode, setDaftarPeriode] = useState([]);
