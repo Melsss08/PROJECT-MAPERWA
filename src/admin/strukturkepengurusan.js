@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../css/cssAdmin/strukturKepengurusan.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import axios from 'axios';
 
 const StrukturKepengurusan = () => {
   const [tahun, setTahun] = useState('');
@@ -15,51 +16,55 @@ const StrukturKepengurusan = () => {
   const [jabatan, setJabatan] = useState('');
   const [gambar, setGambar] = useState(null);
   const [showAddPengurus, setShowAddPengurus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchPeriode();
   }, []);
 
-  const fetchPeriode = () => {
-    fetch('http://localhost:3001/periode')
-      .then(res => res.json())
-      .then(data => {
-        // Pastikan data terbaru berada di bagian atas
-        const sortedData = [...data].sort((a, b) => b.id - a.id);
-        setDaftarPeriode(sortedData);
-      })
-      .catch(err => console.error(err));
+  const fetchPeriode = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/periode');
+      // Pastikan data terbaru berada di bagian atas
+      const sortedData = [...response.data].sort((a, b) => b.id - a.id);
+      setDaftarPeriode(sortedData);
+    } catch (err) {
+      console.error('Failed to fetch periods:', err);
+      setError('Gagal mengambil data periode');
+    }
   };
 
-  const fetchPengurus = (periodeId) => {
-    fetch(`http://localhost:3001/struktur/periode/${periodeId}`)
-      .then(res => res.json())
-      .then(data => setPengurus(data))
-      .catch(err => console.error(err));
+  const fetchPengurus = async (periodeId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/struktur/periode/${periodeId}`);
+      setPengurus(response.data);
+    } catch (err) {
+      console.error('Failed to fetch pengurus:', err);
+      setError('Gagal mengambil data pengurus');
+    }
   };
 
   const handleTambahPeriode = async () => {
-    if (!tahun) return alert('Tahun tidak boleh kosong');
+    if (!tahun) {
+      setError('Tahun tidak boleh kosong');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
 
     try {
-      const response = await fetch('http://localhost:3001/periode', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tahun }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        // Menambahkan periode baru di awal array (posisi teratas)
-        setDaftarPeriode(prev => [data, ...prev]);
-        setTahun('');
-        setShowFormPeriode(false);
-      } else {
-        alert(data.error || 'Gagal menambahkan');
-      }
+      const response = await axios.post('http://localhost:3001/periode', { tahun });
+      // Menambahkan periode baru di awal array (posisi teratas)
+      setDaftarPeriode(prev => [response.data, ...prev]);
+      setTahun('');
+      setShowFormPeriode(false);
     } catch (err) {
-      console.error(err);
-      alert('Terjadi kesalahan');
+      console.error('Failed to add period:', err);
+      setError(err.response?.data?.error || 'Gagal menambahkan periode');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,29 +82,32 @@ const StrukturKepengurusan = () => {
 
   const handleAddPengurus = () => {
     setShowAddPengurus(true);
+    setNama('');
+    setJabatan('');
+    setGambar(null);
+    setError('');
   };
 
   const handleDeletePengurus = async (id) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus pengurus ini?')) {
       try {
-        const response = await fetch(`http://localhost:3001/struktur/${id}`, {
-          method: 'DELETE',
-        });
-
-        if (response.ok) {
-          fetchPengurus(selectedPeriode.id);
-        } else {
-          alert('Gagal menghapus data');
-        }
+        await axios.delete(`http://localhost:3001/struktur/${id}`);
+        fetchPengurus(selectedPeriode.id);
       } catch (err) {
-        console.error(err);
-        alert('Terjadi kesalahan');
+        console.error('Failed to delete pengurus:', err);
+        alert('Gagal menghapus data');
       }
     }
   };
 
   const handleSubmitStruktur = async () => {
-    if (!nama || !jabatan || !gambar) return alert('Lengkapi semua data');
+    if (!nama || !jabatan || !gambar) {
+      setError('Lengkapi semua data');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
 
     const formData = new FormData();
     formData.append('nama', nama);
@@ -108,24 +116,23 @@ const StrukturKepengurusan = () => {
     formData.append('periodeId', selectedPeriode.id);
 
     try {
-      const response = await fetch('http://localhost:3001/struktur', {
-        method: 'POST',
-        body: formData,
+      await axios.post('http://localhost:3001/struktur', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
-
-      if (response.ok) {
-        alert('Data berhasil disimpan');
-        setNama('');
-        setJabatan('');
-        setGambar(null);
-        setShowAddPengurus(false);
-        fetchPengurus(selectedPeriode.id);
-      } else {
-        alert('Gagal menyimpan data');
-      }
+      
+      alert('Data berhasil disimpan');
+      setNama('');
+      setJabatan('');
+      setGambar(null);
+      setShowAddPengurus(false);
+      fetchPengurus(selectedPeriode.id);
     } catch (err) {
-      console.error(err);
-      alert('Terjadi kesalahan');
+      console.error('Failed to submit pengurus:', err);
+      setError(err.response?.data?.error || 'Gagal menyimpan data');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -133,6 +140,8 @@ const StrukturKepengurusan = () => {
   if (!showDetailView) {
     return (
       <div className="struktur-container">
+        {error && <div className="error-message">{error}</div>}
+        
         {!showFormPeriode ? (
           <div className="periode-header">
             <h4>DAFTAR PERIODE</h4>
@@ -151,23 +160,37 @@ const StrukturKepengurusan = () => {
               className="input-periode"
             />
             <div className="btn-wrapper">
-              <button onClick={() => setShowFormPeriode(false)}>Batal</button>
-              <button onClick={handleTambahPeriode}>Tambah</button>
+              <button 
+                onClick={() => setShowFormPeriode(false)}
+                disabled={isLoading}
+              >
+                Batal
+              </button>
+              <button 
+                onClick={handleTambahPeriode}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Menyimpan...' : 'Tambah'}
+              </button>
             </div>
           </div>
         )}
 
         <div className="periode-list">
-          {daftarPeriode.map((item) => (
-            <div
-              key={item.id}
-              className="periode-item"
-              onClick={() => handlePilihPeriode(item)}
-            >
-              <span> {item.tahun}</span>
-              <span className="view-periode">Lihat Detail</span>
-            </div>
-          ))}
+          {daftarPeriode.length > 0 ? (
+            daftarPeriode.map((item) => (
+              <div
+                key={item.id}
+                className="periode-item"
+                onClick={() => handlePilihPeriode(item)}
+              >
+                <span>{item.tahun}</span>
+                <span className="view-periode">Lihat Detail</span>
+              </div>
+            ))
+          ) : (
+            <div className="no-data">Belum ada periode</div>
+          )}
         </div>
       </div>
     );
@@ -176,6 +199,8 @@ const StrukturKepengurusan = () => {
   // Tampilan detail pengurus periode
   return (
     <div className="struktur-detail-container">
+      {error && <div className="error-message">{error}</div>}
+      
       <h2 className="periode-title">PERIODE TAHUN {selectedPeriode?.tahun}</h2>
       
       {!showAddPengurus ? (
@@ -207,6 +232,10 @@ const StrukturKepengurusan = () => {
                             src={`http://localhost:3001/${item.gambarUrl}`} 
                             alt={item.nama} 
                             className="pengurus-image"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = 'http://localhost:3001/uploads/placeholder.png';
+                            }}
                           />
                         ) : (
                           <div className="placeholder-image"></div>
@@ -263,12 +292,23 @@ const StrukturKepengurusan = () => {
           <label>Unggah Gambar</label>
           <input
             type="file"
+            accept="image/*"
             onChange={(e) => setGambar(e.target.files[0])}
           />
 
           <div className="btn-wrapper">
-            <button onClick={() => setShowAddPengurus(false)}>Batal</button>
-            <button onClick={handleSubmitStruktur}>Simpan</button>
+            <button 
+              onClick={() => setShowAddPengurus(false)}
+              disabled={isLoading}
+            >
+              Batal
+            </button>
+            <button 
+              onClick={handleSubmitStruktur}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Menyimpan...' : 'Simpan'}
+            </button>
           </div>
         </div>
       )}
