@@ -1,7 +1,6 @@
 .struktur-container {
   background-color: #D7A86E;
   padding: 20px;
-  
   font-family: sans-serif;
   min-height: 80vh;
 }
@@ -28,6 +27,7 @@
 
 /* Gaya untuk judul dan header */
 .struktur-container h4 {
+  margin-top: 30px;
   margin-top: 10px;
   color: white;
 }
@@ -70,6 +70,8 @@
   cursor: pointer;
   width: fit-content;
   text-align: center;
+  float: right;
+  margin-top: -20px;
   transition: background-color 0.3s ease;
 }
 
@@ -134,6 +136,28 @@
   margin-bottom: 10px;
 }
 
+.form-struktur h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.form-struktur label {
+  display: block;
+  color: white;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.form-struktur input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+}
+
 /* Gaya untuk wrapper tombol */
 .btn-wrapper {
   display: flex;
@@ -145,6 +169,8 @@
 .btn-wrapper button {
   padding: 8px 16px;
   background-color: rgba(116, 81, 45, 0.6);
+  color: white;
+  border: none;
   color: white;
   border: none;
   border-radius: 5px;
@@ -281,6 +307,9 @@
   transition: background-color 0.3s ease;
 }
 
+.btn-wrapper button:hover {
+  background-color: rgba(116, 81, 45, 0.8);
+}
 .btn-kembali:hover {
   background-color: rgba(116, 81, 45, 0.7);
 }
