@@ -20,7 +20,7 @@ import KelolaAspirasi from './admin/kelolaAspirasi';
 
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
-import StrukturKepengurusan from './admin/strukturKepengurusan';
+// import StrukturKepengurusan from './admin/strukturKepengurusan';
 import LayoutAdmin from './components/layoutAdmin';
 import ProfilAdmin from './admin/ProfilAdmin';
 import EditProfilAdmin from './admin/EditProfilAdmin';
@@ -49,7 +49,7 @@ function App() {
         <Route path="/kelolaAspirasi" element={<LayoutAdmin><KelolaAspirasi /></LayoutAdmin>} />
         <Route path="/jadwal" element={<LayoutAdmin><Jadwal /></LayoutAdmin>} />
         <Route path="/kontak" element={<LayoutAdmin><Kontak /></LayoutAdmin>} />
-        <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} />
+        {/* <Route path="/struktur" element={<LayoutAdmin><StrukturKepengurusan/></LayoutAdmin>} /> */}
          <Route path="/profilAdmin" element={<LayoutAdmin><ProfilAdmin/></LayoutAdmin>} />
          <Route path="/edit-profil-admin" element={<LayoutAdmin><EditProfilAdmin /></LayoutAdmin>} />
         {/* Halaman user dengan layout user */}
