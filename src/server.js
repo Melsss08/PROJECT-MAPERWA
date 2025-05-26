@@ -62,6 +62,29 @@ app.post('/inputKepengurusan', upload.single('gambar'), (req, res) => {
   res.send('Data berhasil disimpan');
 });
 
+// Ambil profil admin
+app.get('/admin/:id', (req, res) => {
+  const id = req.params.id;
+  connection.query('SELECT * FROM admin WHERE id = ?', [id], (err, results) => {
+    if (err) return res.status(500).send({ message: 'Server error' });
+    if (results.length === 0) return res.status(404).send({ message: 'User tidak ditemukan' });
+    res.send({ user: results[0] });
+  });
+});
+
+// Update profil admin
+app.put('/admin/:id', (req, res) => {
+  const id = req.params.id;
+  const { username, passwordBaru } = req.body;
+  connection.query(
+    'UPDATE admin SET username = ?, password = ? WHERE id = ?',
+    [username, passwordBaru, id],
+    (err, results) => {
+      if (err) return res.status(500).send({ message: 'Server error' });
+      res.send({ message: 'Profil berhasil diupdate' });
+    }
+  );
+});
 
 sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
