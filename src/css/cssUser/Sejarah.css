@@ -1,4 +1,4 @@
-.container {
+.sejarah-container {
   max-width: 600px;
   margin: 2rem auto;
   font-family: 'Poppins', sans-serif;
@@ -7,14 +7,14 @@
   color: #6a4c2b;
 }
 
-.title {
+.sejarah-title {
   font-weight: 700;
   font-size: 28px;
   text-align: center;
   margin-bottom: 1.5rem;
 }
 
-.card {
+.sejarah-card {
   background-color: #f4e8d4;
   border-radius: 16px;
   padding: 1.5rem 2rem;
@@ -23,9 +23,6 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.5rem;
-}
-
-.sejarah-card {
   flex-wrap: wrap;
 }
 
@@ -42,20 +39,27 @@
   object-fit: contain;
 }
 
-.demisioner-card {
+.sejarah-demisioner-card {
+  background-color: #f4e8d4;
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 0.1);
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
   gap: 20px;
   font-weight: 700;
   font-size: 20px;
+  margin-bottom: 1.5rem;
 }
 
-.icon-left {
+.sejarah-icon-left {
   font-size: 20px;
   cursor: pointer;
   color: #6a4c2b;
 }
 
-.demisioner-text {
+.sejarah-demisioner-text {
   text-align: left;
   line-height: 1.2;
 }

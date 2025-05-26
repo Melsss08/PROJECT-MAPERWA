@@ -1,15 +1,14 @@
-// REGISTER INI FRONTEND DARI DB.JS , LOGIN.JS
-// REGISTER TERHUBUNG DENGAN config/db.js, models/login.js, routes/login.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../css/register.css'; 
+import { useNavigate } from 'react-router-dom';  // <-- import ini
+import '../css/register.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // <-- inisialisasi useNavigate
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -21,10 +20,18 @@ const Register = () => {
         password,
         confirmPassword,
       });
+
       setMessage(response.data.message);
       setUsername('');
       setPassword('');
       setConfirmPassword('');
+
+      // Redirect ke halaman login setelah sukses
+      if(response.data.success || response.status === 200) {
+        // contoh redirect ke route "/login"
+        navigate('/masuk'); 
+      }
+      
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.message);
