@@ -9,7 +9,7 @@ const fs = require('fs');
 // Import models
 const Periode = require('./models/periode');
 const Anggota = require('./models/Anggota');
-const Admin = require('./models/admin'); // Pastikan kamu punya models/admin.js
+// const Admin = require('./models/admin'); // Pastikan kamu punya models/admin.js
 
 // Import routes
 const loginRoutes = require('./routes/login');
