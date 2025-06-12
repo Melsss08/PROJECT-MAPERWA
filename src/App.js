@@ -20,6 +20,8 @@ import KelolaAspirasi from './admin/kelolaAspirasi';
 
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
+import StrukturKepengurusan from './admin/strukturKepengurusan';
+
 // import StrukturKepengurusan from './admin/strukturKepengurusan';
 import LayoutAdmin from './components/layoutAdmin';
 import ProfilAdmin from './admin/ProfilAdmin';
