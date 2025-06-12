@@ -27,6 +27,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
+
 // Pastikan folder uploads exist
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -39,10 +40,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Tentukan penyimpanan gambar
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Tentukan folder penyimpanan gambar
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Menggunakan nama file unik
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
 
@@ -58,21 +59,18 @@ app.use('/kontak', kontakRoutes);
 app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
 app.use('/kelolaBeranda', kelolaBerandaRoutes);
-app.use('/uploads', express.static('uploads'));
 
-// Rute untuk menangani pengiriman data termasuk gambar
+// Rute untuk input kepengurusan
 app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
   try {
     console.log('Request Body:', req.body);
     console.log('Request File:', req.file);
 
-    // Validasi input
     const { periodeTahun, namaLengkap, jabatan } = req.body;
     if (!periodeTahun || !namaLengkap || !jabatan) {
       return res.status(400).json({ error: 'Semua field harus diisi' });
     }
 
-    // Cari atau buat Periode
     let periode;
     try {
       [periode] = await Periode.findOrCreate({
@@ -84,11 +82,8 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
       return res.status(500).json({ error: 'Gagal mencari/membuat periode' });
     }
 
-    // Dapatkan path gambar relatif (hanya 'uploads/filename.ext')
     const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
 
-    // Simpan data ke database
-    // Contoh simpan data ke tabel Anggota:
     try {
       await Anggota.create({
         periodeTahun,
@@ -119,59 +114,7 @@ sequelize.sync({ force: true })
     console.error('Gagal koneksi DB:', err);
   });
 
-const multer = require('multer');
-
-// Tentukan penyimpanan gambar
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/'); // Tentukan folder penyimpanan gambar
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Menggunakan nama file unik
-  }
-});
-
-const upload = multer({ storage: storage });
-
-// Rute untuk menangani pengiriman data termasuk gambar
-app.post('/inputKepengurusan', upload.single('gambar'), (req, res) => {
-  const { periodeTahun, namaLengkap, jabatan } = req.body;
-  const gambar = req.file ? req.file.path : null;
-
-  // Simpan data ke database
-  // Contoh:
-  // Database.insert({ periodeTahun, namaLengkap, jabatan, gambar });
-
-  res.send('Data berhasil disimpan');
-});
-
-// Ambil profil admin
-app.get('/admin/:id', (req, res) => {
-  const id = req.params.id;
-  connection.query('SELECT * FROM admin WHERE id = ?', [id], (err, results) => {
-    if (err) return res.status(500).send({ message: 'Server error' });
-    if (results.length === 0) return res.status(404).send({ message: 'User tidak ditemukan' });
-    res.send({ user: results[0] });
-  });
-});
-
-// Update profil admin
-app.put('/admin/:id', (req, res) => {
-  const id = req.params.id;
-  const { username, passwordBaru } = req.body;
-  connection.query(
-    'UPDATE admin SET username = ?, password = ? WHERE id = ?',
-    [username, passwordBaru, id],
-    (err, results) => {
-      if (err) return res.status(500).send({ message: 'Server error' });
-      res.send({ message: 'Profil berhasil diupdate' });
-    }
-  );
-});
-
-
+// Tes koneksi ke database
 sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
   .catch((err) => console.error('Gagal koneksi DB:', err));
-
-  

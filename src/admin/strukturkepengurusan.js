@@ -1,44 +1,5 @@
-
-// import React, { useEffect, useState } from 'react';
-// import { FaEdit, FaTrash } from 'react-icons/fa';
-// import '../css/cssAdmin/strukturKepengurusan.css';
-
-// const StrukturKepengurusan = () => {
-//   const [tahun, setTahun] = useState('');
-//   const [daftarPeriode, setDaftarPeriode] = useState([]);
-//   const [showFormPeriode, setShowFormPeriode] = useState(false);
-//   const [selectedPeriode, setSelectedPeriode] = useState(null);
-//   const [pengurus, setPengurus] = useState([]);
-//   const [showDetailView, setShowDetailView] = useState(false);
-
-//   // Form struktur pengurus
-//   const [nama, setNama] = useState('');
-//   const [jabatan, setJabatan] = useState('');
-//   const [gambar, setGambar] = useState(null);
-//   const [showAddPengurus, setShowAddPengurus] = useState(false);
-
-//   useEffect(() => {
-//     fetchPeriode();
-//   }, []);
-
-//   const fetchPeriode = () => {
-//     fetch('http://localhost:3001/periode')
-//       .then(res => res.json())
-//       .then(data => {
-//         const sortedData = [...data].sort((a, b) => b.id - a.id);
-//         setDaftarPeriode(sortedData);
-//       })
-//       .catch(err => console.error(err));
-//   };
-
-//   const fetchPengurus = (periodeId) => {
-//     fetch(`http://localhost:3001/struktur/periode/${periodeId}`)
-//       .then(res => res.json())
-//       .then(data => setPengurus(data))
-//       .catch(err => console.error(err));
-//   };
-
 import React, { useEffect, useState } from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import '../css/cssAdmin/strukturKepengurusan.css';
 
 const StrukturKepengurusan = () => {
@@ -46,82 +7,47 @@ const StrukturKepengurusan = () => {
   const [daftarPeriode, setDaftarPeriode] = useState([]);
   const [showFormPeriode, setShowFormPeriode] = useState(false);
   const [selectedPeriode, setSelectedPeriode] = useState(null);
-
-  // Form struktur pengurus
+  const [pengurus, setPengurus] = useState([]);
+  const [showDetailView, setShowDetailView] = useState(false);
   const [nama, setNama] = useState('');
   const [jabatan, setJabatan] = useState('');
   const [gambar, setGambar] = useState(null);
+  const [showAddPengurus, setShowAddPengurus] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3001/periode')
-      .then(res => res.json())
-      .then(data => setDaftarPeriode(data))
-      .catch(err => console.error(err));
+    fetchPeriode();
   }, []);
 
-//   const handleTambahPeriode = async () => {
-//     if (!tahun) return alert('Tahun tidak boleh kosong');
+  const fetchPeriode = () => {
+    fetch('http://localhost:3001/periode')
+      .then(res => res.json())
+      .then(data => {
+        const sortedData = [...data].sort((a, b) => b.id - a.id);
+        setDaftarPeriode(sortedData);
+      })
+      .catch(err => console.error(err));
+  };
 
-//     try {
-//       const response = await fetch('http://localhost:3001/periode', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ tahun }),
-//       });
+  const fetchPengurus = (periodeId) => {
+    fetch(`http://localhost:3001/struktur/periode/${periodeId}`)
+      .then(res => res.json())
+      .then(data => setPengurus(data))
+      .catch(err => console.error(err));
+  };
 
+  const handleTambahPeriode = async () => {
+    if (!tahun) return alert('Tahun tidak boleh kosong');
 
-//       const data = await response.json();
-//       if (response.ok) {
-//         setDaftarPeriode(prev => [data, ...prev]);
-//         setTahun('');
-//         setShowFormPeriode(false);
-//       } else {
-//         alert(data.error || 'Gagal menambahkan');
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       alert('Terjadi kesalahan');
-//     }
-//   };
-
-//   const handlePilihPeriode = (periode) => {
-//     setSelectedPeriode(periode);
-//     fetchPengurus(periode.id);
-//     setShowDetailView(true);
-//   };
-
-//   const handleKembali = () => {
-//     setShowDetailView(false);
-//     setSelectedPeriode(null);
-//     setShowAddPengurus(false);
-//   };
-
-//   const handleAddPengurus = () => {
-//     setShowAddPengurus(true);
-//   };
-
-//   const handleDeletePengurus = async (id) => {
-//     if (window.confirm('Apakah Anda yakin ingin menghapus pengurus ini?')) {
-//       try {
-//         const response = await fetch(`http://localhost:3001/struktur/${id}`, {
-//           method: 'DELETE',
-//         });
-
-//         if (response.ok) {
-//           fetchPengurus(selectedPeriode.id);
-//         } else {
-//           alert('Gagal menghapus data');
-//         }
-//       } catch (err) {
-//         console.error(err);
-//         alert('Terjadi kesalahan');
-//       }
-//     }
-//   };
+    try {
+      const response = await fetch('http://localhost:3001/periode', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tahun }),
+      });
 
       const data = await response.json();
       if (response.ok) {
-        setDaftarPeriode(prev => [...prev, data]);
+        setDaftarPeriode(prev => [data, ...prev]);
         setTahun('');
         setShowFormPeriode(false);
       } else {
@@ -135,172 +61,61 @@ const StrukturKepengurusan = () => {
 
   const handlePilihPeriode = (periode) => {
     setSelectedPeriode(periode);
-    
+    fetchPengurus(periode.id);
+    setShowDetailView(true);
   };
 
+  const handleKembali = () => {
+    setShowDetailView(false);
+    setSelectedPeriode(null);
+    setShowAddPengurus(false);
+  };
 
-//   const handleSubmitStruktur = async () => {
-//     if (!nama || !jabatan || !gambar) return alert('Lengkapi semua data');
+  const handleAddPengurus = () => {
+    setShowAddPengurus(true);
+  };
 
-//     const formData = new FormData();
-//     formData.append('nama', nama);
-//     formData.append('jabatan', jabatan);
-//     formData.append('gambar', gambar);
-//     formData.append('periodeId', selectedPeriode.id);
+  const handleDeletePengurus = async (id) => {
+    if (window.confirm('Apakah Anda yakin ingin menghapus pengurus ini?')) {
+      try {
+        const response = await fetch(`http://localhost:3001/struktur/${id}`, {
+          method: 'DELETE',
+        });
 
-//     try {
-//       const response = await fetch('http://localhost:3001/struktur', {
-//         method: 'POST',
-//         body: formData,
-//       });
+        if (response.ok) {
+          fetchPengurus(selectedPeriode.id);
+        } else {
+          alert('Gagal menghapus data');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan');
+      }
+    }
+  };
 
+  const handleSubmitStruktur = async () => {
+    if (!nama || !jabatan || !gambar) return alert('Lengkapi semua data');
 
-//       if (response.ok) {
-//         alert('Data berhasil disimpan');
-//         setNama('');
-//         setJabatan('');
-//         setGambar(null);
-//         setShowAddPengurus(false);
-//         fetchPengurus(selectedPeriode.id);
-//       } else {
-//         alert('Gagal menyimpan data');
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       alert('Terjadi kesalahan');
-//     }
-//   };
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('jabatan', jabatan);
+    formData.append('gambar', gambar);
+    formData.append('periodeId', selectedPeriode.id);
 
-//   // Tampilan daftar periode
-//   if (!showDetailView) {
-//     return (
-//       <div className="struktur-container">
-//         {!showFormPeriode ? (
-//           <div className="periode-header">
-//             <h4>DAFTAR PERIODE</h4>
-//             <button onClick={() => setShowFormPeriode(true)} className="btn-tambah-periode">
-//               + Tambah Kepengurusan
-//             </button>
-//           </div>
-//         ) : (
-//           <div className="periode-form">
-//             <h3>MASUKKAN PERIODE TAHUN</h3>
-//             <input
-//               type="text"
-//               placeholder="Masukkan Periode Tahun"
-//               value={tahun}
-//               onChange={(e) => setTahun(e.target.value)}
-//               className="input-periode"
-//             />
-//             <div className="btn-wrapper">
-//               <button onClick={() => setShowFormPeriode(false)}>Batal</button>
-//               <button onClick={handleTambahPeriode}>Tambah</button>
-//             </div>
-//           </div>
-//         )}
-
-//         <div className="periode-list">
-//           {daftarPeriode.map((item) => (
-//             <div
-//               key={item.id}
-//               className="periode-item"
-//               onClick={() => handlePilihPeriode(item)}
-//             >
-//               <span>{item.tahun}</span>
-//               <span className="view-periode">Lihat Detail</span>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   // Tampilan detail pengurus periode
-//   return (
-//     <div className="struktur-detail-container">
-//       <h2 className="periode-title">PERIODE TAHUN {selectedPeriode?.tahun}</h2>
-
-//       {!showAddPengurus ? (
-//         <>
-//           <div className="pengurus-actions">
-//             <button className="btn-add-pengurus" onClick={handleAddPengurus}>
-//               + Tambah Pengurus
-//             </button>
-//           </div>
-
-//           <div className="pengurus-table-container">
-//             <table className="pengurus-table">
-//               <thead>
-//                 <tr>
-//                   <th>Gambar</th>
-//                   <th>Nama Lengkap</th>
-//                   <th>Jabatan</th>
-//                   <th>Periode</th>
-//                   <th>Aksi</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {pengurus.length > 0 ? (
-//                   pengurus.map((item) => (
-//                     <tr key={item.id}>
-//                       <td className="gambar-cell">
-//                         {item.gambarUrl ? (
-//                           <img
-//                             src={`http://localhost:3001/${item.gambarUrl}`}
-//                             alt={item.nama}
-//                             className="pengurus-image"
-//                           />
-//                         ) : (
-//                           <div className="placeholder-image"></div>
-//                         )}
-//                       </td>
-//                       <td>{item.nama}</td>
-//                       <td>{item.jabatan}</td>
-//                       <td>{selectedPeriode.tahun}</td>
-//                       <td className="action-cell">
-//                         <button className="btn-icon edit">
-//                           <FaEdit />
-//                         </button>
-//                         <button
-//                           className="btn-icon delete"
-//                           onClick={() => handleDeletePengurus(item.id)}
-//                         >
-//                           <FaTrash />
-//                         </button>
-//                       </td>
-//                     </tr>
-//                   ))
-//                 ) : (
-//                   <tr>
-//                     <td colSpan="5" className="no-data">Belum ada data pengurus</td>
-//                   </tr>
-//                 )}
-//               </tbody>
-//             </table>
-//           </div>
-
-//           <div className="btn-kembali-container">
-//             <button className="btn-kembali" onClick={handleKembali}>
-//               Kembali
-//             </button>
-//           </div>
-//         </>
-//       ) : (
-//         <div className="form-struktur">
-//           <h3>TAMBAH PENGURUS BARU</h3>
-//           <label>Nama Lengkap</label>
-//           <input
-//             type="text"
-//             value={nama}
-//             onChange={(e) => setNama(e.target.value)}
-//           />
+    try {
+      const response = await fetch('http://localhost:3001/struktur', {
+        method: 'POST',
+        body: formData,
+      });
 
       if (response.ok) {
         alert('Data berhasil disimpan');
         setNama('');
         setJabatan('');
         setGambar(null);
-        setSelectedPeriode(null);
+        setShowAddPengurus(false);
+        fetchPengurus(selectedPeriode.id);
       } else {
         alert('Gagal menyimpan data');
       }
@@ -312,86 +127,144 @@ const StrukturKepengurusan = () => {
 
   return (
     <div className="struktur-container">
-      {!showFormPeriode ? (
-        <div style={{ textAlign: 'center', marginTop: '30px' }}>
-          <button onClick={() => setShowFormPeriode(true)} className="btn-tambah-periode">
-            + Tambah Kepengurusan
-          </button>
+      {!showDetailView ? (
+        <div>
+          <div className="periode-header">
+            <h4>DAFTAR PERIODE</h4>
+            {!showFormPeriode ? (
+              <button onClick={() => setShowFormPeriode(true)} className="btn-tambah-periode">
+                + Tambah Kepengurusan
+              </button>
+            ) : (
+              <div className="periode-form">
+                <h3>Masukkan Periode Tahun</h3>
+                <input
+                  type="text"
+                  placeholder="Masukkan tahun"
+                  value={tahun}
+                  onChange={(e) => setTahun(e.target.value)}
+                  className="input-periode"
+                />
+                <div className="btn-wrapper">
+                  <button onClick={() => setShowFormPeriode(false)}>Batal</button>
+                  <button onClick={handleTambahPeriode}>Tambah</button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="periode-list">
+            {daftarPeriode.map((item) => (
+              <div
+                key={item.id}
+                className="periode-item"
+                onClick={() => handlePilihPeriode(item)}
+              >
+                <span>{item.tahun}</span>
+                <span className="view-periode">Lihat Detail</span>
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
-        <div className="periode-form">
-          <h3>MASUKKAN PERIODE TAHUN</h3>
-          <input
-            type="text"
-            placeholder="Masukkan Periode Tahun"
-            value={tahun}
-            onChange={(e) => setTahun(e.target.value)}
-            className="input-periode"
-          />
-          <div className="btn-wrapper">
-            <button onClick={() => setShowFormPeriode(false)}>Batal</button>
-            <button onClick={handleTambahPeriode}>Tambah</button>
-          </div>
-        </div>
-      )}
+        <div className="struktur-detail-container">
+          <h2 className="periode-title">Periode Tahun {selectedPeriode?.tahun}</h2>
 
-      <h4>DAFTAR PERIODE</h4>
-      <div className="periode-list">
-        {daftarPeriode.map((item) => (
-          <div
-            key={item.id}
-            className="periode-item"
-            onClick={() => handlePilihPeriode(item)}
-          >
-            <strong>periode tahun {item.tahun}</strong>
-          </div>
-        ))}
-      </div>
+          {!showAddPengurus ? (
+            <>
+              <div className="pengurus-actions">
+                <button className="btn-add-pengurus" onClick={handleAddPengurus}>
+                  + Tambah Pengurus
+                </button>
+              </div>
 
-      {selectedPeriode && (
-        <div className="form-struktur">
-          <h3>PERIODE TAHUN {selectedPeriode.tahun}</h3>
-          <label>Nama Lengkap</label>
-          <input
-            type="text"
-            value={nama}
-            onChange={(e) => setNama(e.target.value)}
-          />
+              <div className="pengurus-table-container">
+                <table className="pengurus-table">
+                  <thead>
+                    <tr>
+                      <th>Gambar</th>
+                      <th>Nama Lengkap</th>
+                      <th>Jabatan</th>
+                      <th>Periode</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pengurus.length > 0 ? (
+                      pengurus.map((item) => (
+                        <tr key={item.id}>
+                          <td className="gambar-cell">
+                            {item.gambarUrl ? (
+                              <img
+                                src={`http://localhost:3001/${item.gambarUrl}`}
+                                alt={item.nama}
+                                className="pengurus-image"
+                              />
+                            ) : (
+                              <div className="placeholder-image"></div>
+                            )}
+                          </td>
+                          <td>{item.nama}</td>
+                          <td>{item.jabatan}</td>
+                          <td>{selectedPeriode.tahun}</td>
+                          <td className="action-cell">
+                            <button className="btn-icon edit">
+                              <FaEdit />
+                            </button>
+                            <button
+                              className="btn-icon delete"
+                              onClick={() => handleDeletePengurus(item.id)}
+                            >
+                              <FaTrash />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="no-data">Belum ada data pengurus</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-//           <label>Jabatan</label>
-//           <input
-//             type="text"
-//             value={jabatan}
-//             onChange={(e) => setJabatan(e.target.value)}
-//           />
-
-//           <label>Unggah Gambar</label>
-//           <input
-//             type="file"
-//             onChange={(e) => setGambar(e.target.files[0])}
-//           />
-
-
-//           <div className="btn-wrapper">
-//             <button onClick={() => setShowAddPengurus(false)}>Batal</button>
-//             <button onClick={handleSubmitStruktur}>Simpan</button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-          <div className="btn-wrapper">
-            <button onClick={() => setSelectedPeriode(null)}>Batal</button>
-            <button onClick={handleSubmitStruktur}>Simpan</button>
-          </div>
+              <div className="btn-kembali-container">
+                <button className="btn-kembali" onClick={handleKembali}>
+                  Kembali
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="form-struktur">
+              <h3>Tambah Pengurus Baru</h3>
+              <label>Nama Lengkap</label>
+              <input
+                type="text"
+                value={nama}
+                onChange={(e) => setNama(e.target.value)}
+              />
+              <label>Jabatan</label>
+              <input
+                type="text"
+                value={jabatan}
+                onChange={(e) => setJabatan(e.target.value)}
+              />
+              <label>Upload Foto</label>
+              <input
+                type="file"
+                onChange={(e) => setGambar(e.target.files[0])}
+              />
+              <div className="btn-wrapper">
+                <button onClick={() => setShowAddPengurus(false)}>Batal</button>
+                <button onClick={handleSubmitStruktur}>Simpan</button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
   );
 };
 
-
-// export default StrukturKepengurusan;
-// // 
+export default StrukturKepengurusan;
