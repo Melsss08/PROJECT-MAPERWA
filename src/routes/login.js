@@ -74,39 +74,6 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.post('/updatePassword', async (req, res) => {
-  const { userId, oldPassword, newPassword, confirmNewPassword } = req.body;
-
-  if (!userId || !oldPassword || !newPassword || !confirmNewPassword) {
-    return res.status(400).json({ message: 'Semua kolom wajib diisi' });
-  }
-
-  if (newPassword !== confirmNewPassword) {
-    return res.status(400).json({ message: 'Konfirmasi password tidak cocok' });
-  }
-
-  try {
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User tidak ditemukan' });
-    }
-
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Password lama salah' });
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedNewPassword = await bcrypt.hash(newPassword, salt);
-
-    await user.update({ password: hashedNewPassword });
-
-    res.json({ message: 'Password berhasil diperbarui' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Terjadi kesalahan server' });
-  }
-});
 
 
 module.exports = router;
