@@ -10,7 +10,7 @@ const StrukturKepengurusan = () => {
   const [pengurus, setPengurus] = useState([]);
   const [showDetailView, setShowDetailView] = useState(false);
 
-  // Form struktur pengurus
+  //Form struktur pengurus
   const [nama, setNama] = useState('');
   const [jabatan, setJabatan] = useState('');
   const [gambar, setGambar] = useState(null);
