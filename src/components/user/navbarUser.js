@@ -4,7 +4,7 @@ import '../../css/cssUser/navbar.css';
 const NavbarUser = () => (
   <nav className="navbar-user">
     <div className="navbar-left">
-      <img src="/logo2.png" alt="Logo" className="navbar-logo" />
+      <img src="/mpm.png" alt="Logo" className="navbar-logo" />
       <div className="navbar-title">
         <span className="navbar-title-top">MAPERWA</span>
       </div>

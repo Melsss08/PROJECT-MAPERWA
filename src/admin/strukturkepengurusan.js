@@ -41,6 +41,7 @@ const StrukturKepengurusan = () => {
     fetch('http://localhost:3001/periode')
       .then(res => res.json())
       .then(data => {
+
         // Pastikan data terbaru berada di bagian atas
         const sortedData = [...data].sort((a, b) => b.id - a.id);
         setDaftarPeriode(sortedData);
@@ -67,6 +68,7 @@ const StrukturKepengurusan = () => {
 
       const data = await response.json();
       if (response.ok) {
+
         // Menambahkan periode baru di awal array (posisi teratas)
         setDaftarPeriode(prev => [data, ...prev]);
         setTahun('');
@@ -90,6 +92,29 @@ const StrukturKepengurusan = () => {
     setShowDetailView(false);
     setSelectedPeriode(null);
     setShowAddPengurus(false);
+  };
+
+  const handleAddPengurus = () => {
+    setShowAddPengurus(true);
+  };
+
+  const handleDeletePengurus = async (id) => {
+    if (window.confirm('Apakah Anda yakin ingin menghapus pengurus ini?')) {
+      try {
+        const response = await fetch(`http://localhost:3001/struktur/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          fetchPengurus(selectedPeriode.id);
+        } else {
+          alert('Gagal menghapus data');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan');
+      }
+    }
   };
 
   const handleAddPengurus = () => {
@@ -141,6 +166,19 @@ const handleSubmitStruktur = async (e) => {
     if (isEditMode && editId) {
       url = `http://localhost:3001/struktur/${editId}`;
       method = 'PUT'; // atau PATCH tergantung API kamu
+      if (response.ok) {
+        alert('Data berhasil disimpan');
+        setNama('');
+        setJabatan('');
+        setGambar(null);
+        setShowAddPengurus(false);
+        fetchPengurus(selectedPeriode.id);
+      } else {
+        alert('Gagal menyimpan data');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Terjadi kesalahan');
     }
 
     const response = await fetch(url, {
@@ -184,10 +222,27 @@ const handleSubmitStruktur = async (e) => {
             <button onClick={() => setShowFormPeriode(true)} className="btn-tambah-periode">
               + Tambah Kepengurusan
             </button>
+
           </div>
         ) : (
           <div className="periode-form">
             <h3>{isEditMode ? 'EDIT DATA PENGURUS' : 'TAMBAH PENGURUS BARU'}</h3>
+            <input
+              type="text"
+              placeholder="Masukkan Periode Tahun"
+              value={tahun}
+              onChange={(e) => setTahun(e.target.value)}
+              className="input-periode"
+            />
+            <div className="btn-wrapper">
+              <button onClick={() => setShowFormPeriode(false)}>Batal</button>
+              <button onClick={handleTambahPeriode}>Tambah</button>
+            </div>
+          </div>
+          </div>
+        ) : (
+          <div className="periode-form">
+            <h3>MASUKKAN PERIODE TAHUN</h3>
             <input
               type="text"
               placeholder="Masukkan Periode Tahun"
@@ -211,6 +266,7 @@ const handleSubmitStruktur = async (e) => {
             >
               <span> {item.tahun}</span>
               <span className="view-periode">Lihat Detail</span>
+              {item.tahun}
             </div>
           ))}
         </div>
@@ -294,20 +350,28 @@ const handleSubmitStruktur = async (e) => {
         <div className="form-struktur">
           <h3>TAMBAH PENGURUS BARU</h3>
           <label>Nama Lengkap</label>
+  // Tampilan detail pengurus
+  return (
+    <div className="struktur-container">
+      <h3>Struktur Kepengurusan Tahun {selectedPeriode.tahun}</h3>
+      <button onClick={handleKembali}>Kembali</button>
+      <button onClick={handleAddPengurus}>+ Tambah Pengurus</button>
+
+      {showAddPengurus && (
+        <div className="form-pengurus">
           <input
             type="text"
+            placeholder="Nama"
             value={nama}
             onChange={(e) => setNama(e.target.value)}
           />
-
-          <label>Jabatan</label>
           <input
             type="text" 
+            type="text"
+            placeholder="Jabatan"
             value={jabatan}
             onChange={(e) => setJabatan(e.target.value)}
           />
-
-          <label>Unggah Gambar</label>
           <input
             type="file"
             onChange={(e) => setGambar(e.target.files[0])}
@@ -338,8 +402,20 @@ const handleSubmitStruktur = async (e) => {
             </button>
             <button onClick={handleSubmitStruktur}>Simpan</button>
           </div>
+          <button onClick={handleSubmitStruktur}>Simpan</button>
         </div>
       )}
+
+      <div className="pengurus-list">
+        {pengurus.map((item) => (
+          <div key={item.id} className="pengurus-item">
+            <img src={`http://localhost:3001/uploads/${item.gambar}`} alt={item.nama} />
+            <h4>{item.nama}</h4>
+            <p>{item.jabatan}</p>
+            <button onClick={() => handleDeletePengurus(item.id)}>Hapus</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
