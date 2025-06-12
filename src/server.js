@@ -17,6 +17,7 @@ const jadwalRoutes = require('./routes/jadwal');
 const kontakRoutes = require('./routes/kontak');
 const aspirasiRoutes = require('./routes/aspirasi');
 const periodeRoutes = require('./routes/Periode');
+const anggotaRoutes = require('./routes/Anggota');
 const kelolaBerandaRoutes = require('./routes/kelolaBeranda');
 
 const app = express();
@@ -26,6 +27,10 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use('/struktur', anggotaRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 
 // Pastikan folder uploads exist
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -59,6 +64,7 @@ app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
 app.use('/kelolaBeranda', kelolaBerandaRoutes);
 app.use('/uploads', express.static('uploads'));
+
 
 // Rute untuk menangani pengiriman data termasuk gambar
 app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
@@ -108,7 +114,7 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
 });
 
 // Koneksi ke database dan menjalankan server
-sequelize.sync({ force: true })
+sequelize.sync()
   .then(() => {
     console.log('Database terkoneksi!');
     app.listen(PORT, () => {
@@ -123,4 +129,3 @@ sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
   .catch((err) => console.error('Gagal koneksi DB:', err));
 
-  
