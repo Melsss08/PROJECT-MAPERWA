@@ -115,6 +115,7 @@ const StrukturKepengurusan = () => {
     }
   };
 
+
 const handleSubmitStruktur = async (e) => {
   e.preventDefault();
 
@@ -134,13 +135,14 @@ const handleSubmitStruktur = async (e) => {
       formData.append('gambar', gambar);
     }
 
-    let url = ('http://localhost:3001/struktur');
+    let url = 'http://localhost:3001/struktur';
     let method = 'POST';
 
     // Jika sedang edit, ubah endpoint dan method
     if (isEditMode && editId) {
       url = ('http://localhost:3001/struktur/${editId}');
       method = 'PUT'; // atau PATCH tergantung API kamu
+
     }
 
     const response = await fetch(url, {
@@ -249,7 +251,7 @@ const handleSubmitStruktur = async (e) => {
                       <td className="gambar-cell">
                         {item.gambarUrl ? (
                           <img 
-                            src={('http://localhost:3001/${item.gambarUrl')}
+                            src={('http://localhost:3001/${item.gambarUrl}')} 
                             alt={item.nama} 
                             className="pengurus-image"
                           />
@@ -317,7 +319,7 @@ const handleSubmitStruktur = async (e) => {
           <div style={{ marginTop: '10px' }}>
             <p>Gambar saat ini:</p>
             <img 
-              src={('http://localhost:3001/${gambarLama')} 
+              src={('http://localhost:3001/${gambarLama}')} 
               alt="Preview Gambar Lama" 
               style={{ width: '120px', borderRadius: '8px' }}
             />
@@ -338,8 +340,11 @@ const handleSubmitStruktur = async (e) => {
             </button>
             <button onClick={handleSubmitStruktur}>Simpan</button>
           </div>
+
         </div>
       )}
+
+
     </div>
   );
 };

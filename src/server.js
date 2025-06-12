@@ -9,6 +9,7 @@ const fs = require('fs');
 // Import models
 const Periode = require('./models/periode');
 const Anggota = require('./models/Anggota');
+// const Admin = require('./models/admin'); // Pastikan kamu punya models/admin.js
 
 // Import routes
 const loginRoutes = require('./routes/login');
@@ -39,21 +40,21 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(uploadsDir));
 
-// Tentukan penyimpanan gambar
+// Konfigurasi Multer untuk unggah gambar
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Tentukan folder penyimpanan gambar
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Menggunakan nama file unik
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// Gunakan rute secara terpisah
+// Gunakan rute secara modular
 app.use('/', loginRoutes);
 app.use('/api/babs', babsRoutes);
 app.use('/api/jadwal', jadwalRoutes);
@@ -63,50 +64,31 @@ app.use('/kontak', kontakRoutes);
 app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
 app.use('/kelolaBeranda', kelolaBerandaRoutes);
-app.use('/uploads', express.static('uploads'));
-
 
 // Rute untuk menangani pengiriman data termasuk gambar
+// Rute: Input Kepengurusan dengan gambar
 app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
   try {
-    console.log('Request Body:', req.body);
-    console.log('Request File:', req.file);
-
-    // Validasi input
     const { periodeTahun, namaLengkap, jabatan } = req.body;
+    const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
+
     if (!periodeTahun || !namaLengkap || !jabatan) {
       return res.status(400).json({ error: 'Semua field harus diisi' });
     }
 
-    // Cari atau buat Periode
-    let periode;
-    try {
-      [periode] = await Periode.findOrCreate({
-        where: { tahun: periodeTahun },
-        defaults: { tahun: periodeTahun }
-      });
-    } catch (error) {
-      console.error('Error saat mencari/membuat periode:', error);
-      return res.status(500).json({ error: 'Gagal mencari/membuat periode' });
-    }
+    const [periode] = await Periode.findOrCreate({
+      where: { tahun: periodeTahun },
+      defaults: { tahun: periodeTahun }
+    });
 
-    // Dapatkan path gambar relatif (hanya 'uploads/filename.ext')
-    const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
+    await Anggota.create({
+      periodeTahun,
+      namaLengkap,
+      jabatan,
+      gambar: gambarPath
+    });
 
-    // Simpan data ke database
-    // Contoh simpan data ke tabel Anggota:
-    try {
-      await Anggota.create({
-        periodeTahun,
-        namaLengkap,
-        jabatan,
-        gambar: gambarPath
-      });
-      res.send('Data berhasil disimpan');
-    } catch (error) {
-      console.error('Error saat menyimpan data anggota:', error);
-      res.status(500).json({ error: 'Gagal menyimpan data anggota' });
-    }
+    res.send('Data berhasil disimpan');
   } catch (error) {
     console.error('Terjadi kesalahan:', error);
     res.status(500).json({ error: 'Terjadi kesalahan pada server' });
@@ -115,6 +97,41 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
 
 // Koneksi ke database dan menjalankan server
 sequelize.sync()
+// Rute: Ambil profil admin
+app.get('/admin/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const admin = await Admin.findByPk(id);
+    if (!admin) return res.status(404).send({ message: 'User tidak ditemukan' });
+    res.send({ user: admin });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
+// Rute: Update profil admin
+app.put('/admin/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { username, passwordBaru } = req.body;
+
+    const [updated] = await Admin.update(
+      { username, password: passwordBaru },
+      { where: { id } }
+    );
+
+    if (updated === 0) return res.status(404).send({ message: 'User tidak ditemukan' });
+
+    res.send({ message: 'Profil berhasil diupdate' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
+// Sync DB dan jalankan server
+sequelize.sync() // Ganti ke `true` hanya jika ingin reset semua tabel
   .then(() => {
     console.log('Database terkoneksi!');
     app.listen(PORT, () => {
@@ -128,4 +145,3 @@ sequelize.sync()
 sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
   .catch((err) => console.error('Gagal koneksi DB:', err));
-

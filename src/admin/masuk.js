@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // import useNavigate
 import '../css/register.css'; 
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();  // inisialisasi navigate
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,10 +20,13 @@ const Login = () => {
         password,
       });
       setMessage(response.data.message);
-      
-      // Simpan userId ke localStorage (atau context jika pakai React Context)
+
+      // Simpan data login ke localStorage
       localStorage.setItem('userId', response.data.user.id);
       localStorage.setItem('username', response.data.user.username);
+
+      // Redirect ke halaman beranda setelah login sukses
+      navigate('/admin/adart');  // sesuaikan path halaman beranda sesuai router kamu
 
     } catch (error) {
       if (error.response) {

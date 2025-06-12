@@ -1,0 +1,89 @@
+.edit-profil-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 150px 20px;
+  background-color: #e0b07c;
+  height: 100vh;
+}
+
+.profil-icon {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profil-icon .icon {
+  font-size: 80px;
+  color: #5c4033;
+  margin-bottom: 10px;
+}
+
+.profil-icon h3 {
+  font-size: 22px;
+  color: #5c4033;
+}
+
+.edit-profil-form {
+  background-color: #f7d6a3;
+  padding: 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edit-profil-form label {
+  font-weight: 600;
+  color: #5c4033;
+}
+
+.edit-profil-form input {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #d9b68d;
+  color: #5c4033;
+  font-size: 14px;
+}
+
+.edit-profil-form input::placeholder {
+  color: #5c4033;
+  opacity: 0.7;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.cancel {
+  background-color: #5c4033;
+  color: #fff;
+}
+
+.cancel:hover {
+  background-color: #3e2a20;
+}
+
+.save {
+  background-color: #d9b68d;
+  color: #5c4033;
+}
+
+.save:hover {
+  background-color: #cda776;
+}
