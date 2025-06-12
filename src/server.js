@@ -18,6 +18,7 @@ const jadwalRoutes = require('./routes/jadwal');
 const kontakRoutes = require('./routes/kontak');
 const aspirasiRoutes = require('./routes/aspirasi');
 const periodeRoutes = require('./routes/Periode');
+const anggotaRoutes = require('./routes/Anggota');
 const kelolaBerandaRoutes = require('./routes/kelolaBeranda');
 
 const app = express();
@@ -27,6 +28,10 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use('/struktur', anggotaRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 
 // Pastikan folder uploads exist
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -60,6 +65,7 @@ app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
 app.use('/kelolaBeranda', kelolaBerandaRoutes);
 
+// Rute untuk menangani pengiriman data termasuk gambar
 // Rute: Input Kepengurusan dengan gambar
 app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
   try {
@@ -89,6 +95,8 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
   }
 });
 
+// Koneksi ke database dan menjalankan server
+sequelize.sync()
 // Rute: Ambil profil admin
 app.get('/admin/:id', async (req, res) => {
   try {
@@ -133,3 +141,7 @@ sequelize.sync() // Ganti ke `true` hanya jika ingin reset semua tabel
   .catch(err => {
     console.error('Gagal koneksi DB:', err);
   });
+
+sequelize.authenticate()
+  .then(() => console.log('Koneksi DB berhasil.'))
+  .catch((err) => console.error('Gagal koneksi DB:', err));

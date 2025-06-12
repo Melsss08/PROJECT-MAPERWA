@@ -9,6 +9,8 @@ import Adart from './admin/adart';
 import KelolaAspirasi from './admin/kelolaAspirasi';
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
+import StrukturKepengurusan from './admin/strukturKepengurusan';
+
 // import StrukturKepengurusan from './admin/strukturKepengurusan';
 import StrukturKepengurusan from './admin/strukturkepengurusan';
 import KelolaBeranda from './admin/kelolaBeranda';
