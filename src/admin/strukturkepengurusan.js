@@ -118,6 +118,9 @@ const StrukturKepengurusan = () => {
 const handleSubmitStruktur = async (e) => {
   e.preventDefault();
 
+const handleSubmitStruktur = async (e) => {
+  e.preventDefault();
+
   if (!nama || !jabatan || !selectedPeriode?.id) {
     console.log({ nama, jabatan, periodeId: selectedPeriode?.id, gambar });
     alert('Lengkapi semua field terlebih dahulu!');
@@ -133,6 +136,14 @@ const handleSubmitStruktur = async (e) => {
     if (gambar) {
       formData.append('gambar', gambar);
     }
+
+    let url = 'http://localhost:3001/struktur';
+    let method = 'POST';
+
+    // Jika sedang edit, ubah endpoint dan method
+    if (isEditMode && editId) {
+      url = `http://localhost:3001/struktur/${editId}`;
+      method = 'PUT'; // atau PATCH tergantung API kamu
 
 
 const handleSubmitStruktur = async (e) => {
@@ -160,8 +171,6 @@ const handleSubmitStruktur = async (e) => {
     // Jika sedang edit, ubah endpoint dan method
     if (isEditMode && editId) {
       url = ('http://localhost:3001/struktur/${editId}');
-
-
     }
 
     const response = await fetch(url, {
@@ -270,11 +279,10 @@ const handleSubmitStruktur = async (e) => {
                       <td className="gambar-cell">
                         {item.gambarUrl ? (
                           <img 
-
+                            src={`http://localhost:3001/${item.gambarUrl}`} 
                             src={'http://localhost:3001/${item.gambarUrl}'} 
-
                            src={('http://localhost:3001/${item.gambarUrl}')} 
-
+                         
                             alt={item.nama} 
                             className="pengurus-image"
                           />
@@ -341,6 +349,34 @@ const handleSubmitStruktur = async (e) => {
           {isEditMode && gambarLama && !gambar && (
           <div style={{ marginTop: '10px' }}>
             <p>Gambar saat ini:</p>
+            <img 
+              src={`http://localhost:3001/${gambarLama}`} 
+              alt="Preview Gambar Lama" 
+              style={{ width: '120px', borderRadius: '8px' }}
+            />
+          </div>
+        )}
+
+
+          <div className="btn-wrapper">
+            <button onClick={() => {
+              setShowAddPengurus(false);
+              setIsEditMode(false);
+              setEditId(null);
+              setNama('');
+              setJabatan('');
+              setGambar(null);
+            }}>
+              Batal
+            </button>
+            <button onClick={handleSubmitStruktur}>Simpan</button>
+          </div>
+        </div>
+      )}
+
+          {isEditMode && gambarLama && !gambar && (
+          <div style={{ marginTop: '10px' }}>
+            <p>Gambar saat ini:</p>
 
               src={'http://localhost:3001/${gambarLama}'} 
 
@@ -369,8 +405,6 @@ const handleSubmitStruktur = async (e) => {
 
         </div>
       )}
-
-
     </div>
   );
 };

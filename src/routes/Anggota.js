@@ -41,6 +41,24 @@ const upload = multer({
 router.put('/struktur/:id', upload.single('gambar'), async (req, res) => {
   try {
     const { nama, jabatan, gambarLama, periodeId } = req.body;
+    const gambarBaru = req.file ? `uploads/${req.file.filename}` : null;
+    const finalGambar = gambarBaru || gambarLama;
+
+    if (!nama || !jabatan || !periodeId) {
+      return res.status(400).json({ error: 'Semua data wajib diisi' });
+    }
+
+    // Update menggunakan Sequelize
+    await Anggota.update(
+      {
+        namaLengkap: nama,
+        jabatan,
+        gambar: finalGambar,
+        periodeId,
+      },
+      {
+        where: { id: req.params.id },
+      }
     const gambarBaru = req.file ? req.file.filename : null;
     const finalGambar = gambarBaru || gambarLama;
 
