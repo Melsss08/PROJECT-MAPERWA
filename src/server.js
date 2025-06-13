@@ -26,6 +26,7 @@ const PORT = 3001;
 
 // Middleware
 app.use(cors());
+app.use(anggotaRoutes); 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use('/struktur', anggotaRoutes);
@@ -54,6 +55,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
 
 // Gunakan rute secara modular
 app.use('/', loginRoutes);
@@ -87,6 +89,9 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
     }
 
 
+    // Cari atau buat periode
+
+
     let periode;
     try {
       [periode] = await Periode.findOrCreate({
@@ -113,15 +118,18 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
       res.status(500).json({ error: 'Gagal menyimpan data anggota' });
     }
 
+
     const [periode] = await Periode.findOrCreate({
       where: { tahun: periodeTahun },
       defaults: { tahun: periodeTahun }
     });
 
+    // Gunakan periode.id, BUKAN periodeTahun
     await Anggota.create({
-      periodeTahun,
+
       namaLengkap,
       jabatan,
+      periodeId: periode.id,
       gambar: gambarPath
     });
 
@@ -131,6 +139,8 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
     res.status(500).json({ error: 'Terjadi kesalahan pada server' });
   }
 });
+
+
 
 // Koneksi ke database dan menjalankan server
 

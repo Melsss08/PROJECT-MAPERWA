@@ -1,5 +1,5 @@
 const express = require('express');
-// const { upload } = require('../server'); // Mengimpor upload dari server.js
+
 const Anggota = require('../models/Anggota');  // Pastikan model Anggota sudah diimport
 const Periode = require('../models/periode');
 const router = express.Router();
@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
@@ -37,9 +37,19 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB
 });
 
-
+// =========================== PUT (Update Struktur) ===========================
 router.put('/struktur/:id', upload.single('gambar'), async (req, res) => {
+  const { nama, jabatan, periodeId } = req.body;
+  const { id } = req.params;
+
   try {
+
+    const pengurus = await Anggota.findByPk(id);
+
+    if (!pengurus) {
+      return res.status(404).json({ error: 'Data pengurus tidak ditemukan' });
+    }
+
     const { nama, jabatan, gambarLama, periodeId } = req.body;
     const gambarBaru = req.file ? `uploads/${req.file.filename}` : null;
     const finalGambar = gambarBaru || gambarLama;
@@ -62,42 +72,45 @@ router.put('/struktur/:id', upload.single('gambar'), async (req, res) => {
     const gambarBaru = req.file ? req.file.filename : null;
     const finalGambar = gambarBaru || gambarLama;
 
-    if (!nama || !jabatan || !periodeId || !finalGambar) {
-      return res.status(400).json({ error: 'Semua data wajib diisi' });
+
+    // Hapus gambar lama jika ada gambar baru diupload
+    if (req.file && pengurus.gambar) {
+      const pathGambarLama = path.join(__dirname, '..', pengurus.gambar);
+      if (fs.existsSync(pathGambarLama)) {
+        fs.unlinkSync(pathGambarLama);
+      }
     }
 
-    await db.query(
-      'UPDATE struktur SET namaLengkap = ?, jabatan = ?, gambarUrl = ?, periodeId = ? WHERE id = ?',
-      [nama, jabatan, finalGambar, periodeId, req.params.id]
-    );
+    // Update data pengurus
+    await pengurus.update({
+      namaLengkap: nama,
+      jabatan,
+      periodeId,
+      gambar: req.file ? `uploads/${req.file.filename}` : pengurus.gambar,
+    });
 
-    res.json({ message: 'Data berhasil diperbarui' });
-  } catch (error) {
-    console.error('Gagal update struktur:', error);
-    res.status(500).json({ error: 'Gagal update struktur' });
+    console.log('req.file:', req.file);
+    res.json({ message: 'Data berhasil diperbarui', data: pengurus });
+  } catch (err) {
+    console.error('Error PUT /struktur/:id:', err);
+    res.status(500).json({ error: 'Terjadi kesalahan saat memperbarui data' });
   }
 });
 
 
-// Tambah data anggota baru
+// =========================== POST (Tambah Anggota) ===========================
 router.post('/', upload.single('gambar'), async (req, res) => {
   try {
-    console.log('Request Body:', req.body);
-    console.log('Request File:', req.file);
-    
+
+
     const { nama, jabatan, periodeId } = req.body;
-    
-    // Validasi input
+
     if (!nama || !jabatan || !periodeId) {
       return res.status(400).json({ error: 'Semua field harus diisi' });
     }
 
-    // Dapatkan path gambar relatif dari folder uploads
-    // Simpan hanya 'uploads/filename.ext' alih-alih path lengkap
-   const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
-
-
-    // Simpan data ke database
+    // ⬇️ Baris ini penting dan HARUS ADA DI SINI
+    const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
     const newAnggota = await Anggota.create({
       namaLengkap: nama,
       jabatan,
@@ -112,7 +125,8 @@ router.post('/', upload.single('gambar'), async (req, res) => {
   }
 });
 
-// Ambil pengurus berdasarkan periode
+
+// =========================== GET (Ambil berdasarkan Periode) ===========================
 router.get('/periode/:periodeId', async (req, res) => {
   try {
     const { periodeId } = req.params;
@@ -120,22 +134,21 @@ router.get('/periode/:periodeId', async (req, res) => {
       where: { periodeId },
       order: [['createdAt', 'DESC']]
     });
-    
-    // Transform data untuk konsistensi dengan frontend
+
     const transformedData = data.map(item => ({
       id: item.id,
-      nama: item.namaLengkap, // Map namaLengkap ke nama
+      nama: item.namaLengkap,
       namaLengkap: item.namaLengkap,
       jabatan: item.jabatan,
       periodeId: item.periodeId,
       gambar: item.gambar,
-      gambarUrl: item.gambar, // Tambahkan gambarUrl
+      gambarUrl: item.gambar,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt
     }));
-    
+
     console.log('Data anggota yang dikirim:', transformedData);
-    
+
     res.json(transformedData);
   } catch (err) {
     console.error('Error saat mengambil data anggota:', err);
@@ -143,16 +156,16 @@ router.get('/periode/:periodeId', async (req, res) => {
   }
 });
 
-// Hapus pengurus
+// =========================== DELETE (Hapus Anggota) ===========================
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const anggota = await Anggota.findByPk(id);
-    
+
     if (!anggota) {
       return res.status(404).json({ error: 'Data pengurus tidak ditemukan' });
     }
-    
+
     // Hapus file gambar jika ada
     if (anggota.gambar) {
       const fullPath = path.join(__dirname, '..', anggota.gambar);
@@ -160,7 +173,7 @@ router.delete('/:id', async (req, res) => {
         fs.unlinkSync(fullPath);
       }
     }
-    
+
     await anggota.destroy();
     res.status(200).json({ message: 'Data pengurus berhasil dihapus' });
   } catch (err) {
