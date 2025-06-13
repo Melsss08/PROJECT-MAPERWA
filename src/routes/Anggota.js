@@ -1,12 +1,13 @@
 const express = require('express');
-const { upload } = require('../server'); // Mengimpor upload dari server.js
+// const { upload } = require('../server'); // Mengimpor upload dari server.js
 const Anggota = require('../models/Anggota');  // Pastikan model Anggota sudah diimport
 const Periode = require('../models/periode');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const Anggota = require('../models/Anggota');
+const db = require('../config/db');
+
 
 // Pastikan folder uploads ada
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -36,6 +37,38 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB
 });
 
+
+router.put('/struktur/:id', upload.single('gambar'), async (req, res) => {
+  try {
+    const { nama, jabatan, gambarLama, periodeId } = req.body;
+    const gambarBaru = req.file ? `uploads/${req.file.filename}` : null;
+    const finalGambar = gambarBaru || gambarLama;
+
+    if (!nama || !jabatan || !periodeId) {
+      return res.status(400).json({ error: 'Semua data wajib diisi' });
+    }
+
+    // Update menggunakan Sequelize
+    await Anggota.update(
+      {
+        namaLengkap: nama,
+        jabatan,
+        gambar: finalGambar,
+        periodeId,
+      },
+      {
+        where: { id: req.params.id },
+      }
+    );
+
+    res.json({ message: 'Data berhasil diperbarui' });
+  } catch (error) {
+    console.error('Gagal update struktur:', error);
+    res.status(500).json({ error: 'Gagal update struktur' });
+  }
+});
+
+
 // Tambah data anggota baru
 router.post('/', upload.single('gambar'), async (req, res) => {
   try {
@@ -51,9 +84,8 @@ router.post('/', upload.single('gambar'), async (req, res) => {
 
     // Dapatkan path gambar relatif dari folder uploads
     // Simpan hanya 'uploads/filename.ext' alih-alih path lengkap
-    const gambarPath = req.file ? 
-      `uploads/${req.file.filename}` :
-      null;
+   const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
+
 
     // Simpan data ke database
     const newAnggota = await Anggota.create({

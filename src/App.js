@@ -20,6 +20,9 @@ import EditProfilAdmin from './admin/EditProfilAdmin';
 import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
 import Beranda from './user/beranda';  // Pastikan path yang benar
 import Aspirasi from './user/aspirasi';  // Pastikan path yang benar
+import PengumumanUser from './user/pengumumanUser';
+import ContactCard from './user/ContactCard';
+import Sejarah from './user/Sejarah';
 
 
 function App() {
@@ -48,6 +51,9 @@ function App() {
         <Route path="/user" element={<LayoutUser />}>
           <Route path="beranda" element={<Beranda />} />
           <Route path="aspirasi" element={<Aspirasi />} />
+          <Route path="pengumuman" element={<PengumumanUser />} />
+          <Route path="kontak" element={<ContactCard />} />
+           <Route path="tentang" element={<Sejarah/>} />
         </Route>
       </Routes>
     </Router>
