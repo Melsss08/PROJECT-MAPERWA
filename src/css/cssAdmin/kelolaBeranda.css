@@ -2,10 +2,13 @@
   max-width: 800px;
   margin: 30px auto;
   padding: 20px;
+  background-color: rgba(75, 54, 33, 0.3); /* transparansi 30% */
+
   background-color: #f9f0e6;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 
 .beranda-container h2 {
   text-align: center;
@@ -39,9 +42,15 @@
 
 .submit-btn,
 .edit-btn {
+
+  padding: 10px 20px;
+  margin-top: 15px;
+  background-color: #4b3621;
+
   padding: 12px 24px;
   margin-top: 20px;
   background-color: #b68b59;
+
   color: white;
   border: none;
   border-radius: 10px;

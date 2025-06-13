@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import '../css/cssAdmin/editProfilAdmin.css';
 
 const EditProfilAdmin = () => {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <div className="edit-profil-container">
       <div className="profil-icon">
         <FaUserCircle className="icon" />
-        <h3>Admin</h3>
+        <h3>{username || 'Admin'}</h3>
       </div>
 
       <form className="edit-profil-form">
         <label>Username</label>
-        <input type="text" placeholder="Masukkan Username" />
+        <input type="text" value={username} readOnly />
 
         <label>Password Lama</label>
         <input type="password" placeholder="Masukkan Password Lama" />

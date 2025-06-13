@@ -33,6 +33,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
+
 // Pastikan folder uploads exist
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -65,15 +66,51 @@ app.use('/api/aspirasi', aspirasiRoutes);
 app.use('/periode', periodeRoutes);
 app.use('/kelolaBeranda', kelolaBerandaRoutes);
 
+
+// Rute untuk input kepengurusan
+app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
+  try {
+    console.log('Request Body:', req.body);
+    console.log('Request File:', req.file);
+
+
 // Rute untuk menangani pengiriman data termasuk gambar
 // Rute: Input Kepengurusan dengan gambar
 app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
   try {
+
     const { periodeTahun, namaLengkap, jabatan } = req.body;
     const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
 
     if (!periodeTahun || !namaLengkap || !jabatan) {
       return res.status(400).json({ error: 'Semua field harus diisi' });
+    }
+
+
+    let periode;
+    try {
+      [periode] = await Periode.findOrCreate({
+        where: { tahun: periodeTahun },
+        defaults: { tahun: periodeTahun }
+      });
+    } catch (error) {
+      console.error('Error saat mencari/membuat periode:', error);
+      return res.status(500).json({ error: 'Gagal mencari/membuat periode' });
+    }
+
+    const gambarPath = req.file ? `uploads/${req.file.filename}` : null;
+
+    try {
+      await Anggota.create({
+        periodeTahun,
+        namaLengkap,
+        jabatan,
+        gambar: gambarPath
+      });
+      res.send('Data berhasil disimpan');
+    } catch (error) {
+      console.error('Error saat menyimpan data anggota:', error);
+      res.status(500).json({ error: 'Gagal menyimpan data anggota' });
     }
 
     const [periode] = await Periode.findOrCreate({
@@ -96,6 +133,8 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
 });
 
 // Koneksi ke database dan menjalankan server
+
+sequelize.sync({ force: true })
 sequelize.sync()
 // Rute: Ambil profil admin
 app.get('/admin/:id', async (req, res) => {
@@ -132,6 +171,7 @@ app.put('/admin/:id', async (req, res) => {
 
 // Sync DB dan jalankan server
 sequelize.sync() // Ganti ke `true` hanya jika ingin reset semua tabel
+
   .then(() => {
     console.log('Database terkoneksi!');
     app.listen(PORT, () => {
@@ -141,6 +181,7 @@ sequelize.sync() // Ganti ke `true` hanya jika ingin reset semua tabel
   .catch(err => {
     console.error('Gagal koneksi DB:', err);
   });
+
 
 sequelize.authenticate()
   .then(() => console.log('Koneksi DB berhasil.'))
