@@ -30,19 +30,10 @@ const Anggota = db.define('Anggota', {
   }
 }, {
   tableName: 'anggota',
-  timestamps: true,
-  // Tambahkan virtual fields untuk konsistensi
-  getterMethods: {
-    nama: function() {
-      return this.namaLengkap;
-    },
-    gambarUrl: function() {
-      return this.gambar ? this.gambar : null;
-    }
-  }
+  timestamps: true
 });
 
-// Definisikan relasi dengan Periode
+
 Anggota.belongsTo(Periode, { foreignKey: 'periodeId' });
 Periode.hasMany(Anggota, { foreignKey: 'periodeId' });
 

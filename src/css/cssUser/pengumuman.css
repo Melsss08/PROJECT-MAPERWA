@@ -1,42 +1,5 @@
-.pengumuman-container {
-  background-color: #f2d3a3;
-  padding: 24px;
-  border-radius: 10px;
-  max-width: 900px;
-  margin: 30px auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.pengumuman-container h2 {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #3c1e08;
-}
-
-.pengumuman-card {
-  /* background-color: #f8e0c0; */
-  padding: 18px 20px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  border: 1px solid #d8b183;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.pengumuman-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-}
-
-.pengumuman-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-  color: #5b3310;
-}
-
 .pengumuman-title {
+  
   font-size: 18px;
   font-weight: 600;
 }

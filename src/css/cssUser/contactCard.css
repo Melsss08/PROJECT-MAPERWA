@@ -1,57 +1,113 @@
 .contact-wrapper-user {
+
   display: flex;
+
   justify-content: center;
+
   align-items: center;
+
   background-color: #e3b375;
+
   height: 100vh;
+
 }
+
+
 
 .contact-card-user {
+
   background-color: #e2b07e;
+
   padding: 40px;
+
   border-radius: 16px;
+
   width: 100%;
+
   max-width: 400px;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
   text-align: center;
+
 }
+
+
 
 .contact-title-user {
+
   font-size: 24px;
+
   font-weight: bold;
+
   color: #2e1d10;
+
   margin-bottom: 30px;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   gap: 12px;
+
 }
+
+
 
 .contact-list-user {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 16px;
+
 }
+
+
 
 .contact-item-user {
+
   background-color: #a8744f;
+
   color: white;
+
   padding: 12px 18px;
+
   border-radius: 10px;
+
   display: flex;
+
   align-items: center;
+
   gap: 12px;
+
   font-size: 16px;
+
   justify-content: flex-start;
+
   transition: 0.2s ease-in-out;
+
 }
+
+
 
 .contact-item-user:hover {
+
   transform: scale(1.02);
+
   cursor: pointer;
+
 }
 
+
+
 .icon-user {
+
   font-size: 18px;
+
   color: #2e1d10;
+
 }

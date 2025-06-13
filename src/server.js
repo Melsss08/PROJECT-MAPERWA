@@ -26,10 +26,12 @@ const PORT = 3001;
 
 // Middleware
 app.use(cors());
+app.use(anggotaRoutes); 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use('/struktur', anggotaRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 
 
@@ -54,6 +56,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+
 // Gunakan rute secara modular
 app.use('/', loginRoutes);
 app.use('/api/babs', babsRoutes);
@@ -76,15 +79,18 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
       return res.status(400).json({ error: 'Semua field harus diisi' });
     }
 
+    // Cari atau buat periode
     const [periode] = await Periode.findOrCreate({
       where: { tahun: periodeTahun },
       defaults: { tahun: periodeTahun }
     });
 
+    // Gunakan periode.id, BUKAN periodeTahun
     await Anggota.create({
-      periodeTahun,
+
       namaLengkap,
       jabatan,
+      periodeId: periode.id,
       gambar: gambarPath
     });
 
@@ -94,6 +100,8 @@ app.post('/inputKepengurusan', upload.single('gambar'), async (req, res) => {
     res.status(500).json({ error: 'Terjadi kesalahan pada server' });
   }
 });
+
+
 
 // Koneksi ke database dan menjalankan server
 sequelize.sync()

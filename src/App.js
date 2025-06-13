@@ -9,10 +9,10 @@ import Adart from './admin/adart';
 import KelolaAspirasi from './admin/kelolaAspirasi';
 import Jadwal from './admin/jadwal';
 import Kontak from './admin/kontak';
-import StrukturKepengurusan from './admin/strukturKepengurusan';
 
-// import StrukturKepengurusan from './admin/strukturKepengurusan';
+
 import StrukturKepengurusan from './admin/strukturkepengurusan';
+
 import KelolaBeranda from './admin/kelolaBeranda';
 import LayoutAdmin from './components/layoutAdmin';
 import ProfilAdmin from './admin/ProfilAdmin';
@@ -22,7 +22,9 @@ import EditProfilAdmin from './admin/EditProfilAdmin';
 import LayoutUser from './components/user/layoutUser';  // Pastikan path yang benar
 import Beranda from './user/beranda';  // Pastikan path yang benar
 import Aspirasi from './user/aspirasi';  // Pastikan path yang benar
-
+import PengumumanUser from './user/pengumumanUser';
+import ContactCard from './user/ContactCard';
+import Sejarah from './user/Sejarah';
 
 function App() {
   return (
@@ -50,6 +52,9 @@ function App() {
         <Route path="/user" element={<LayoutUser />}>
           <Route path="beranda" element={<Beranda />} />
           <Route path="aspirasi" element={<Aspirasi />} />
+          <Route path="kontak" element={<ContactCard />} />
+          <Route path="pengumuman" element={<PengumumanUser />} />
+          <Route path="tentang" element={<Sejarah />} />
         </Route>
       </Routes>
     </Router>

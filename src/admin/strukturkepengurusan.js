@@ -10,38 +10,33 @@ const StrukturKepengurusan = () => {
   const [pengurus, setPengurus] = useState([]);
   const [showDetailView, setShowDetailView] = useState(false);
 
-  // Form struktur pengurus
   const [nama, setNama] = useState('');
   const [jabatan, setJabatan] = useState('');
   const [gambar, setGambar] = useState(null);
   const [showAddPengurus, setShowAddPengurus] = useState(false);
 
-  useEffect(() => {
-    fetchPeriode();
-  }, []);
-
-
   const [isEditMode, setIsEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
   const [gambarLama, setGambarLama] = useState('');
 
+  useEffect(() => {
+    fetchPeriode();
+  }, []);
 
   const handleEditPengurus = (pengurus) => {
-  setNama(pengurus.namaLengkap);
-  setJabatan(pengurus.jabatan);
-  setGambar(null); // gambar diset ulang, biar bisa upload baru
-  setEditId(pengurus.id);
-  setIsEditMode(true);
-  setShowAddPengurus(true);
-  setGambarLama(pengurus.gambarUrl);
-};
-
+    setNama(pengurus.namaLengkap);
+    setJabatan(pengurus.jabatan);
+    setGambar(null);
+    setEditId(pengurus.id);
+    setIsEditMode(true);
+    setShowAddPengurus(true);
+    setGambarLama(pengurus.gambarUrl);
+  };
 
   const fetchPeriode = () => {
     fetch('http://localhost:3001/periode')
       .then(res => res.json())
       .then(data => {
-        // Pastikan data terbaru berada di bagian atas
         const sortedData = [...data].sort((a, b) => b.id - a.id);
         setDaftarPeriode(sortedData);
       })
@@ -49,7 +44,7 @@ const StrukturKepengurusan = () => {
   };
 
   const fetchPengurus = (periodeId) => {
-    fetch('http://localhost:3001/struktur/periode/${periodeId}')
+    fetch(`http://localhost:3001/struktur/periode/${periodeId}`)
       .then(res => res.json())
       .then(data => setPengurus(data))
       .catch(err => console.error(err));
@@ -67,7 +62,6 @@ const StrukturKepengurusan = () => {
 
       const data = await response.json();
       if (response.ok) {
-        // Menambahkan periode baru di awal array (posisi teratas)
         setDaftarPeriode(prev => [data, ...prev]);
         setTahun('');
         setShowFormPeriode(false);
@@ -99,7 +93,7 @@ const StrukturKepengurusan = () => {
   const handleDeletePengurus = async (id) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus pengurus ini?')) {
       try {
-        const response = await fetch('http://localhost:3001/struktur/${id}', {
+        const response = await fetch(`http://localhost:3001/struktur/${id}`, {
           method: 'DELETE',
         });
 
@@ -115,68 +109,60 @@ const StrukturKepengurusan = () => {
     }
   };
 
+  const handleSubmitStruktur = async (e) => {
+    e.preventDefault();
 
-const handleSubmitStruktur = async (e) => {
-  e.preventDefault();
-
-  if (!nama || !jabatan || !selectedPeriode?.id) {
-    console.log({ nama, jabatan, periodeId: selectedPeriode?.id, gambar });
-    alert('Lengkapi semua field terlebih dahulu!');
-    return;
-  }
-
-  try {
-    const formData = new FormData();
-    formData.append('nama', nama);
-    formData.append('jabatan', jabatan);
-
-    formData.append('periodeId', selectedPeriode.id);
-    if (gambar) {
-      formData.append('gambar', gambar);
+    if (!nama || !jabatan || !selectedPeriode?.id) {
+      console.log({ nama, jabatan, periodeId: selectedPeriode?.id, gambar });
+      alert('Lengkapi semua field terlebih dahulu!');
+      return;
     }
 
-    let url = 'http://localhost:3001/struktur';
-    let method = 'POST';
+    try {
+      const formData = new FormData();
+      formData.append('nama', nama);
+      formData.append('jabatan', jabatan);
+      formData.append('periodeId', selectedPeriode.id);
+      if (gambar) {
+        formData.append('gambar', gambar);
+      }
 
-    // Jika sedang edit, ubah endpoint dan method
-    if (isEditMode && editId) {
-      url = ('http://localhost:3001/struktur/${editId}');
-      method = 'PUT'; // atau PATCH tergantung API kamu
+      let url = 'http://localhost:3001/struktur';
+      let method = 'POST';
 
+      if (isEditMode && editId) {
+      url = `http://localhost:3001/struktur/${editId}`;
+      method = 'PUT';
     }
 
-    const response = await fetch(url, {
-      method,
-      body: formData,
-    });
 
-    const result = await response.json();
-    console.log('Response:', result);
+      const response = await fetch(url, {
+        method,
+        body: formData,
+      });
 
-    if (response.ok) {
-      alert(isEditMode ? 'Data berhasil diperbarui' : 'Data berhasil disimpan');
+      const result = await response.json();
+      console.log('Response:', result);
 
-      // Reset form dan state
-      setNama('');
-      setJabatan('');
-      setGambar(null);
-      setGambarLama('');
-      setIsEditMode(false);
-      setEditId(null);
-      setShowAddPengurus(false);
-
-      // Refresh daftar pengurus
-      fetchPengurus(selectedPeriode.id);
-    } else {
-      alert(result.error || 'Gagal menyimpan data');
+      if (response.ok) {
+        alert(isEditMode ? 'Data berhasil diperbarui' : 'Data berhasil disimpan');
+        setNama('');
+        setJabatan('');
+        setGambar(null);
+        setGambarLama('');
+        setIsEditMode(false);
+        setEditId(null);
+        setShowAddPengurus(false);
+        fetchPengurus(selectedPeriode.id);
+      } else {
+        alert(result.error || 'Gagal menyimpan data');
+      }
+    } catch (error) {
+      console.error('Error saat submit:', error);
+      alert('Terjadi kesalahan saat menyimpan data');
     }
-  } catch (error) {
-    console.error('Error saat submit:', error);
-    alert('Terjadi kesalahan saat menyimpan data');
-  }
-};
+  };
 
-  // Tampilan daftar periode
   if (!showDetailView) {
     return (
       <div className="struktur-container">
@@ -220,11 +206,10 @@ const handleSubmitStruktur = async (e) => {
     );
   }
 
-  // Tampilan detail pengurus periode
   return (
     <div className="struktur-detail-container">
       <h2 className="periode-title">PERIODE TAHUN {selectedPeriode?.tahun}</h2>
-      
+
       {!showAddPengurus ? (
         <>
           <div className="pengurus-actions">
@@ -232,7 +217,7 @@ const handleSubmitStruktur = async (e) => {
               + Tambah Pengurus
             </button>
           </div>
-          
+
           <div className="pengurus-table-container">
             <table className="pengurus-table">
               <thead>
@@ -250,9 +235,9 @@ const handleSubmitStruktur = async (e) => {
                     <tr key={item.id}>
                       <td className="gambar-cell">
                         {item.gambarUrl ? (
-                          <img 
-                            src={('http://localhost:3001/${item.gambarUrl}')} 
-                            alt={item.nama} 
+                          <img
+                            src={`http://localhost:3001/${item.gambarUrl}`}
+                            alt={item.nama}
                             className="pengurus-image"
                           />
                         ) : (
@@ -263,12 +248,12 @@ const handleSubmitStruktur = async (e) => {
                       <td>{item.jabatan}</td>
                       <td>{selectedPeriode.tahun}</td>
                       <td className="action-cell">
-                        <button className="btn-icon edit" 
-                        onClick={() => handleEditPengurus(item)}
+                        <button className="btn-icon edit"
+                          onClick={() => handleEditPengurus(item)}
                         >
-                         <FaEdit />
+                          <FaEdit />
                         </button>
-                        <button 
+                        <button
                           className="btn-icon delete"
                           onClick={() => handleDeletePengurus(item.id)}
                         >
@@ -285,7 +270,7 @@ const handleSubmitStruktur = async (e) => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="btn-kembali-container">
             <button className="btn-kembali" onClick={handleKembali}>
               Kembali
@@ -304,7 +289,7 @@ const handleSubmitStruktur = async (e) => {
 
           <label>Jabatan</label>
           <input
-            type="text" 
+            type="text"
             value={jabatan}
             onChange={(e) => setJabatan(e.target.value)}
           />
@@ -316,16 +301,15 @@ const handleSubmitStruktur = async (e) => {
           />
 
           {isEditMode && gambarLama && !gambar && (
-          <div style={{ marginTop: '10px' }}>
-            <p>Gambar saat ini:</p>
-            <img 
-              src={('http://localhost:3001/${gambarLama}')} 
-              alt="Preview Gambar Lama" 
-              style={{ width: '120px', borderRadius: '8px' }}
-            />
-          </div>
-        )}
-
+            <div style={{ marginTop: '10px' }}>
+              <p>Gambar saat ini:</p>
+              <img
+                src={`http://localhost:3001/${gambarLama}`}
+                alt="Preview Gambar Lama"
+                style={{ width: '120px', borderRadius: '8px' }}
+              />
+            </div>
+          )}
 
           <div className="btn-wrapper">
             <button onClick={() => {
@@ -340,11 +324,8 @@ const handleSubmitStruktur = async (e) => {
             </button>
             <button onClick={handleSubmitStruktur}>Simpan</button>
           </div>
-
         </div>
       )}
-
-
     </div>
   );
 };
