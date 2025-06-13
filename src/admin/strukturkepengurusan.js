@@ -36,7 +36,6 @@ const StrukturKepengurusan = () => {
   setGambarLama(pengurus.gambarUrl);
 };
 
-
   const fetchPeriode = () => {
     fetch('http://localhost:3001/periode')
       .then(res => res.json())
@@ -49,7 +48,7 @@ const StrukturKepengurusan = () => {
   };
 
   const fetchPengurus = (periodeId) => {
-    fetch(`http://localhost:3001/struktur/periode/${periodeId}`)
+    fetch('http://localhost:3001/struktur/periode/${periodeId}')
       .then(res => res.json())
       .then(data => setPengurus(data))
       .catch(err => console.error(err));
@@ -99,7 +98,7 @@ const StrukturKepengurusan = () => {
   const handleDeletePengurus = async (id) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus pengurus ini?')) {
       try {
-        const response = await fetch(`http://localhost:3001/struktur/${id}`, {
+        const response = await fetch('http://localhost:3001/struktur/${id}', {
           method: 'DELETE',
         });
 
@@ -114,6 +113,10 @@ const StrukturKepengurusan = () => {
       }
     }
   };
+
+
+const handleSubmitStruktur = async (e) => {
+  e.preventDefault();
 
 const handleSubmitStruktur = async (e) => {
   e.preventDefault();
@@ -141,6 +144,33 @@ const handleSubmitStruktur = async (e) => {
     if (isEditMode && editId) {
       url = `http://localhost:3001/struktur/${editId}`;
       method = 'PUT'; // atau PATCH tergantung API kamu
+
+
+const handleSubmitStruktur = async (e) => {
+  e.preventDefault();
+
+  if (!nama || !jabatan || !selectedPeriode?.id) {
+    console.log({ nama, jabatan, periodeId: selectedPeriode?.id, gambar });
+    alert('Lengkapi semua field terlebih dahulu!');
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('jabatan', jabatan);
+
+    formData.append('periodeId', selectedPeriode.id);
+    if (gambar) {
+      formData.append('gambar', gambar);
+    }
+
+    let url = 'http://localhost:3001/struktur';
+    let method = 'POST';
+
+    // Jika sedang edit, ubah endpoint dan method
+    if (isEditMode && editId) {
+      url = ('http://localhost:3001/struktur/${editId}');
     }
 
     const response = await fetch(url, {
@@ -250,6 +280,9 @@ const handleSubmitStruktur = async (e) => {
                         {item.gambarUrl ? (
                           <img 
                             src={`http://localhost:3001/${item.gambarUrl}`} 
+                            src={'http://localhost:3001/${item.gambarUrl}'} 
+                           src={('http://localhost:3001/${item.gambarUrl}')} 
+                         
                             alt={item.nama} 
                             className="pengurus-image"
                           />
@@ -338,6 +371,38 @@ const handleSubmitStruktur = async (e) => {
             </button>
             <button onClick={handleSubmitStruktur}>Simpan</button>
           </div>
+        </div>
+      )}
+
+          {isEditMode && gambarLama && !gambar && (
+          <div style={{ marginTop: '10px' }}>
+            <p>Gambar saat ini:</p>
+
+              src={'http://localhost:3001/${gambarLama}'} 
+
+              src={('http://localhost:3001/${gambarLama}')} 
+
+              alt="Preview Gambar Lama" 
+              style={{ width: '120px', borderRadius: '8px' }}
+            />
+          </div>
+        )}
+
+
+          <div className="btn-wrapper">
+            <button onClick={() => {
+              setShowAddPengurus(false);
+              setIsEditMode(false);
+              setEditId(null);
+              setNama('');
+              setJabatan('');
+              setGambar(null);
+            }}>
+              Batal
+            </button>
+            <button onClick={handleSubmitStruktur}>Simpan</button>
+          </div>
+
         </div>
       )}
     </div>

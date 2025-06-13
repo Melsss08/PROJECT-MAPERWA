@@ -59,6 +59,16 @@ router.put('/struktur/:id', upload.single('gambar'), async (req, res) => {
       {
         where: { id: req.params.id },
       }
+    const gambarBaru = req.file ? req.file.filename : null;
+    const finalGambar = gambarBaru || gambarLama;
+
+    if (!nama || !jabatan || !periodeId || !finalGambar) {
+      return res.status(400).json({ error: 'Semua data wajib diisi' });
+    }
+
+    await db.query(
+      'UPDATE struktur SET namaLengkap = ?, jabatan = ?, gambarUrl = ?, periodeId = ? WHERE id = ?',
+      [nama, jabatan, finalGambar, periodeId, req.params.id]
     );
 
     res.json({ message: 'Data berhasil diperbarui' });
