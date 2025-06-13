@@ -43,11 +43,35 @@ router.put('/struktur/:id', upload.single('gambar'), async (req, res) => {
   const { id } = req.params;
 
   try {
+
     const pengurus = await Anggota.findByPk(id);
 
     if (!pengurus) {
       return res.status(404).json({ error: 'Data pengurus tidak ditemukan' });
     }
+
+    const { nama, jabatan, gambarLama, periodeId } = req.body;
+    const gambarBaru = req.file ? `uploads/${req.file.filename}` : null;
+    const finalGambar = gambarBaru || gambarLama;
+
+    if (!nama || !jabatan || !periodeId) {
+      return res.status(400).json({ error: 'Semua data wajib diisi' });
+    }
+
+    // Update menggunakan Sequelize
+    await Anggota.update(
+      {
+        namaLengkap: nama,
+        jabatan,
+        gambar: finalGambar,
+        periodeId,
+      },
+      {
+        where: { id: req.params.id },
+      }
+    const gambarBaru = req.file ? req.file.filename : null;
+    const finalGambar = gambarBaru || gambarLama;
+
 
     // Hapus gambar lama jika ada gambar baru diupload
     if (req.file && pengurus.gambar) {

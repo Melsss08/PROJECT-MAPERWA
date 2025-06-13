@@ -24,6 +24,7 @@ const StrukturKepengurusan = () => {
   }, []);
 
   const handleEditPengurus = (pengurus) => {
+
     setNama(pengurus.namaLengkap);
     setJabatan(pengurus.jabatan);
     setGambar(null);
@@ -32,6 +33,16 @@ const StrukturKepengurusan = () => {
     setShowAddPengurus(true);
     setGambarLama(pengurus.gambarUrl);
   };
+
+  setNama(pengurus.namaLengkap);
+  setJabatan(pengurus.jabatan);
+  setGambar(null); // gambar diset ulang, biar bisa upload baru
+  setEditId(pengurus.id);
+  setIsEditMode(true);
+  setShowAddPengurus(true);
+  setGambarLama(pengurus.gambarUrl);
+};
+
 
   const fetchPeriode = () => {
     fetch('http://localhost:3001/periode')
@@ -118,6 +129,7 @@ const StrukturKepengurusan = () => {
       return;
     }
 
+
     try {
       const formData = new FormData();
       formData.append('nama', nama);
@@ -126,6 +138,16 @@ const StrukturKepengurusan = () => {
       if (gambar) {
         formData.append('gambar', gambar);
       }
+
+const handleSubmitStruktur = async (e) => {
+  e.preventDefault();
+
+  if (!nama || !jabatan || !selectedPeriode?.id) {
+    console.log({ nama, jabatan, periodeId: selectedPeriode?.id, gambar });
+    alert('Lengkapi semua field terlebih dahulu!');
+    return;
+  }
+
 
       let url = 'http://localhost:3001/struktur';
       let method = 'POST';
@@ -136,6 +158,7 @@ const StrukturKepengurusan = () => {
     }
 
 
+
       const response = await fetch(url, {
         method,
         body: formData,
@@ -143,6 +166,40 @@ const StrukturKepengurusan = () => {
 
       const result = await response.json();
       console.log('Response:', result);
+
+    // Jika sedang edit, ubah endpoint dan method
+    if (isEditMode && editId) {
+      url = `http://localhost:3001/struktur/${editId}`;
+      method = 'PUT'; // atau PATCH tergantung API kamu
+
+
+const handleSubmitStruktur = async (e) => {
+  e.preventDefault();
+
+  if (!nama || !jabatan || !selectedPeriode?.id) {
+    console.log({ nama, jabatan, periodeId: selectedPeriode?.id, gambar });
+    alert('Lengkapi semua field terlebih dahulu!');
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('jabatan', jabatan);
+
+    formData.append('periodeId', selectedPeriode.id);
+    if (gambar) {
+      formData.append('gambar', gambar);
+    }
+
+    let url = 'http://localhost:3001/struktur';
+    let method = 'POST';
+
+    // Jika sedang edit, ubah endpoint dan method
+    if (isEditMode && editId) {
+      url = ('http://localhost:3001/struktur/${editId}');
+    }
+
 
       if (response.ok) {
         alert(isEditMode ? 'Data berhasil diperbarui' : 'Data berhasil disimpan');
@@ -235,9 +292,18 @@ const StrukturKepengurusan = () => {
                     <tr key={item.id}>
                       <td className="gambar-cell">
                         {item.gambarUrl ? (
+
                           <img
                             src={`http://localhost:3001/${item.gambarUrl}`}
                             alt={item.nama}
+
+                          <img 
+                            src={`http://localhost:3001/${item.gambarUrl}`} 
+                            src={'http://localhost:3001/${item.gambarUrl}'} 
+                           src={('http://localhost:3001/${item.gambarUrl}')} 
+                         
+                            alt={item.nama} 
+
                             className="pengurus-image"
                           />
                         ) : (
@@ -301,6 +367,7 @@ const StrukturKepengurusan = () => {
           />
 
           {isEditMode && gambarLama && !gambar && (
+
             <div style={{ marginTop: '10px' }}>
               <p>Gambar saat ini:</p>
               <img
@@ -310,6 +377,18 @@ const StrukturKepengurusan = () => {
               />
             </div>
           )}
+
+          <div style={{ marginTop: '10px' }}>
+            <p>Gambar saat ini:</p>
+            <img 
+              src={`http://localhost:3001/${gambarLama}`} 
+              alt="Preview Gambar Lama" 
+              style={{ width: '120px', borderRadius: '8px' }}
+            />
+          </div>
+        )}
+
+
 
           <div className="btn-wrapper">
             <button onClick={() => {
@@ -326,6 +405,40 @@ const StrukturKepengurusan = () => {
           </div>
         </div>
       )}
+
+
+          {isEditMode && gambarLama && !gambar && (
+          <div style={{ marginTop: '10px' }}>
+            <p>Gambar saat ini:</p>
+
+              src={'http://localhost:3001/${gambarLama}'} 
+
+              src={('http://localhost:3001/${gambarLama}')} 
+
+              alt="Preview Gambar Lama" 
+              style={{ width: '120px', borderRadius: '8px' }}
+            />
+          </div>
+        )}
+
+
+          <div className="btn-wrapper">
+            <button onClick={() => {
+              setShowAddPengurus(false);
+              setIsEditMode(false);
+              setEditId(null);
+              setNama('');
+              setJabatan('');
+              setGambar(null);
+            }}>
+              Batal
+            </button>
+            <button onClick={handleSubmitStruktur}>Simpan</button>
+          </div>
+
+        </div>
+      )}
+
     </div>
   );
 };
